@@ -71,5 +71,23 @@ router.post('/verify-otp', async (req, res) => {
 
   res.status(201).json({ message: 'Admin registered successfully' });
 });
+router.post('/login', async (req, res) => {
+  const { email, password } = req.body;
+
+  const admin = await Admin.findOne({ adminemail: email });
+  if (!admin) return res.status(400).json({ message: 'Invalid credentials' });
+
+  const isMatch = await bcrypt.compare(password, admin.adminpassword);
+  if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+
+  const token = jwt.sign({ id: admin._id, email:admin.adminemail, name:admin.adminname }, process.env.JWT_SECRET, {
+    expiresIn: '1h'
+  });
+  res.status(200).json({
+    message: 'Login successful',
+    token,
+   
+  });
+});
 module.exports = router;
 
