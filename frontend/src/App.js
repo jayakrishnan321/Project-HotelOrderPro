@@ -1,9 +1,15 @@
-
-    function App() {
+import AdminLogin from "./pages/AdminLogin";
+import AdminRegister from "./pages/AdminRegister";
+import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
+  function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
-      <h1 className="text-4xl font-bold text-blue-600">Hello Tailwind in React!</h1>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/admin/register" element={<AdminRegister/>}/>
+        <Route path="/admin/login" element={<AdminLogin/>}/>
+      </Routes>
+    </Router>
+    
   );
 }
 export default App;
