@@ -50,4 +50,14 @@ router.get('/fooditems', async (req, res) => {
   const foods = await Food.find()
   res.json(foods);
 });
+router.delete('/:id', async (req, res) => {
+  try {
+    const food = await Food.findByIdAndDelete(req.params.id);
+    if (!food) return res.status(404).json({ message: 'food not found' });
+
+    res.status(200).json({ message: 'fooditem deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Delete failed', error: err.message });
+  }
+});
 module.exports = router;

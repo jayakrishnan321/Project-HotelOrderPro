@@ -1,10 +1,10 @@
 import React from 'react'
-import { useState,useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 function AdminViewFoodItem() {
      const [foods, setFoods] = useState([]);
 
-  useEffect(() => {
+ 
     // Fetch all food items
     const fetchFoods = async () => {
       try {
@@ -16,13 +16,20 @@ function AdminViewFoodItem() {
     };
 
     fetchFoods();
-  }, []);
+ 
     const handleEdit=(id)=>{
 
     }
-    const handleDelete=(id)=>{
-
+    const handleDelete = async (id) => {
+    if (window.confirm('Are you sure you want to delete this item?')) {
+      try {
+        await axios.delete(`http://localhost:5000/api/foods/${id}`);
+        fetchFoods()
+      } catch (err) {
+        console.error('Delete failed:', err);
+      }
     }
+  };
   return (
      <div className="overflow-x-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Food Items</h2>
