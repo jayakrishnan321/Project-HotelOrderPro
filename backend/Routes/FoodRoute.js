@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 require('dotenv').config();
+
 const Food = require('../models/Foods');
 
 // ✅ Configure multer
@@ -45,5 +46,8 @@ router.post('/upload', upload.single('foodimage'), async (req, res) => {
     res.status(500).json({ error: 'Failed to upload food item' });
   }
 });
-
+router.get('/fooditems', async (req, res) => {
+  const foods = await Food.find()
+  res.json(foods);
+});
 module.exports = router;
