@@ -1,7 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
-
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 function AdminAddFoodItem() {
+    const navigate=useNavigate()
+    const token=sessionStorage.getItem('token')
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+const id=decoded.id
      const [formData, setFormData] = useState({
     name: '',
     type: 'veg',
@@ -9,12 +14,34 @@ function AdminAddFoodItem() {
     image: null,
     description: ''
   });
-    const handleSubmit=()=>{
+    const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    }
-    const handleChange=()=>{
+    const data = new FormData();
+    data.append('foodname', formData.name);
+    data.append('foodtype', formData.type);
+    data.append('foodprice', formData.price);
+    data.append('foodimage', formData.image);
+    data.append('fooddescription', formData.description);
+    data.append('adminId',id)
 
+    try {
+      const res = await axios.post('http://localhost:5000/api/foods/upload', data);
+      alert('Food item added!');
+      console.log(res.data)
+      navigate('/admin/home')
+    } catch (error) {
+      console.error(error);
+      alert('Failed to add food item');
     }
+  };
+    const handleChange = (e) => {
+    if (e.target.name === 'image') {
+      setFormData({ ...formData, image: e.target.files[0] });
+    } else {
+      setFormData({ ...formData, [e.target.name]: e.target.value });
+    }
+  };
      const inputClass =
     'w-full px-4 py-2 border border-black rounded-md focus:outline-none';
   return (
