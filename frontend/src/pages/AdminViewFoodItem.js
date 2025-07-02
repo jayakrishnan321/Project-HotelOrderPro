@@ -1,10 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function AdminViewFoodItem() {
      const [foods, setFoods] = useState([]);
 
- 
+ const navigate=useNavigate()
     // Fetch all food items
     const fetchFoods = async () => {
       try {
@@ -17,9 +18,7 @@ function AdminViewFoodItem() {
 
     fetchFoods();
  
-    const handleEdit=(id)=>{
-
-    }
+    
     const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
@@ -58,7 +57,9 @@ function AdminViewFoodItem() {
               <td className="border p-2">
                 <button
                   className="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
-                  onClick={() => handleEdit(food._id)}
+                  onClick={() =>{
+                       navigate(`/admin/editfooditem/${food._id}`)
+                  } }
                 >
                   Edit
                 </button>

@@ -50,6 +50,10 @@ router.get('/fooditems', async (req, res) => {
   const foods = await Food.find()
   res.json(foods);
 });
+router.get('/:id',async(req,res)=>{
+       const foods=await Food.findById(req.params.id)
+       res.json(foods)
+})
 router.delete('/:id', async (req, res) => {
   try {
     const food = await Food.findByIdAndDelete(req.params.id);
@@ -58,6 +62,28 @@ router.delete('/:id', async (req, res) => {
     res.status(200).json({ message: 'fooditem deleted successfully' });
   } catch (err) {
     res.status(500).json({ message: 'Delete failed', error: err.message });
+  }
+});
+router.put('/edit/:id', upload.single('foodimage'), async (req, res) => {
+  try {
+    const { foodname, foodtype, foodprice, fooddescription } = req.body;
+
+    const updateFields = {
+      foodname,
+      foodtype,
+      foodprice,
+      fooddescription
+    };
+
+    if (req.file) {
+      updateFields.foodimage = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    }
+
+    await Food.findByIdAndUpdate(req.params.id, updateFields);
+    res.status(200).json({ message: 'Food updated successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Update failed' });
   }
 });
 module.exports = router;
