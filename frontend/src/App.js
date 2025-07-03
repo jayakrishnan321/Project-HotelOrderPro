@@ -5,6 +5,8 @@ import AdminDashboard from './pages/AdminDashboard'
 import AdminAddFoodItem from "./pages/AdminAddFoodItem";
 import AdminViewFoodItem from "./pages/AdminViewFoodItem";
 import AdminEditFood from "./pages/AdminEditFood";
+import AdminSettings from "./pages/AdminSettings";
+import AdminChangePassword from "./pages/AdminChangePassword";
   function App() {
   return (
     <Router>
@@ -15,6 +17,8 @@ import AdminEditFood from "./pages/AdminEditFood";
         <Route path="/admin/addfooditem" element={<AdminAddFoodItem/>}/>
         <Route path="/admin/viewfooditem" element={<AdminViewFoodItem/>}/>
         <Route path="/admin/editfooditem/:id" element={<AdminEditFood/>}/>
+        <Route path="/admin/settings" element={<AdminSettings/>}/>
+        <Route path="/admin/changepassword/:id" element={<AdminChangePassword/>}/>
       </Routes>
     </Router>
     
