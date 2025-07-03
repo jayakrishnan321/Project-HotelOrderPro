@@ -5,6 +5,7 @@ function AdminDashboard() {
      const token = sessionStorage.getItem('token')
  const decoded = JSON.parse(atob(token.split('.')[1]));
 const name=decoded.name
+const id=decoded.id
 
 
   return (
@@ -15,7 +16,7 @@ const name=decoded.name
   className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
     <p className="text-lg font-semibold text-blue-700">Add Food Items</p>
   </div>
-  <div onClick={()=>{navigate('/admin/viewfooditem') }}
+  <div onClick={()=>{navigate(`/admin/viewfooditem/${id}`) }}
   className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
     <p className="text-lg font-semibold text-blue-700">view Food Items</p>
   </div>

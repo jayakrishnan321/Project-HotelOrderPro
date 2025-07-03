@@ -57,7 +57,7 @@ function AdminEditFood() {
     try {
       await axios.put(`http://localhost:5000/api/foods/edit/${id}`, data);
       alert('Food updated successfully');
-      navigate('/admin/viewfooditem');
+      navigate('/admin/viewfooditem/:id');
     } catch (err) {
       console.error(err);
       alert('Failed to update food item');

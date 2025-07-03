@@ -1,23 +1,27 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useEffect,useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function AdminViewFoodItem() {
      const [foods, setFoods] = useState([]);
+     const token = sessionStorage.getItem('token')
+ const decoded = JSON.parse(atob(token.split('.')[1]));
+ const id=decoded.id
 
  const navigate=useNavigate()
     // Fetch all food items
-    const fetchFoods = async () => {
-      try {
-        const res = await axios.get('http://localhost:5000/api/foods/fooditems');
-        setFoods(res.data);
-      } catch (err) {
-        console.error('Failed to fetch foods', err);
-      }
-    };
+   const fetchFoods = useCallback(async () => {
+  try {
+    const res = await axios.get(`http://localhost:5000/api/foods/fooditems/${id}`);
+    setFoods(res.data);
+  } catch (err) {
+    console.error('Failed to fetch foods', err);
+  }
+}, [id]);
 
-    fetchFoods();
- 
+   useEffect(() => {
+  fetchFoods();
+}, [fetchFoods]);
     
     const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {

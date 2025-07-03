@@ -46,8 +46,8 @@ router.post('/upload', upload.single('foodimage'), async (req, res) => {
     res.status(500).json({ error: 'Failed to upload food item' });
   }
 });
-router.get('/fooditems', async (req, res) => {
-  const foods = await Food.find()
+router.get('/fooditems/:id', async (req, res) => {
+  const foods = await Food.find({adminId:req.params.id})
   res.json(foods);
 });
 router.get('/:id',async(req,res)=>{
