@@ -14,7 +14,6 @@ function TableConfigure() {
       const res = await axios.get(`http://localhost:5000/api/tables/${adminId}`);
       const { acTables = 0, nonAcTables = 0 } = res.data;
 
-      // Create table entries for rendering
       const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));
       const nonAc = Array.from({ length: nonAcTables }, (_, i) => ({ type: 'Non-AC', number: i + 1 }));
 
@@ -36,18 +35,42 @@ function TableConfigure() {
       </button>
 
       {visible && (
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {tables.map((table, index) => (
-            <div
-              key={index}
-              className={`p-4 rounded shadow-md text-center text-white ${
-                table.type === 'AC' ? 'bg-green-600' : 'bg-gray-700'
-              }`}
-            >
-              <p className="font-bold">Table {table.number}</p>
-              <p>{table.type}</p>
+        <div className="space-y-8">
+          {/* Non-AC Tables Section */}
+          <div>
+            <h1 className="text-xl font-bold mb-2 text-green-700">Non-AC Tables</h1>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {tables
+                .filter((table) => table.type === 'Non-AC')
+                .map((table, index) => (
+                  <div
+                    key={index}
+                    className="p-4 rounded shadow-md text-center text-white bg-green-600"
+                  >
+                    <p className="font-bold">Table {table.number}</p>
+                    <p>{table.type}</p>
+                  </div>
+                ))}
             </div>
-          ))}
+          </div>
+
+          {/* AC Tables Section */}
+          <div>
+            <h1 className="text-xl font-bold mb-2 text-gray-800">AC Tables</h1>
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+              {tables
+                .filter((table) => table.type === 'AC')
+                .map((table, index) => (
+                  <div
+                    key={index}
+                    className="p-4 rounded shadow-md text-center text-white bg-gray-700"
+                  >
+                    <p className="font-bold">Table {table.number}</p>
+                    <p>{table.type}</p>
+                  </div>
+                ))}
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -55,4 +78,3 @@ function TableConfigure() {
 }
 
 export default TableConfigure;
-
