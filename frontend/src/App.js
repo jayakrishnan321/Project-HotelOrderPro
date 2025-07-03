@@ -8,6 +8,7 @@ import AdminEditFood from "./pages/AdminEditFood";
 import AdminSettings from "./pages/AdminSettings";
 import AdminChangePassword from "./pages/AdminChangePassword";
 import AdminTableSettings from "./pages/AdminTableSettings";
+import AdminTableConfigure from "./pages/AdminTableConfigure";
 
   function App() {
   return (
@@ -22,6 +23,7 @@ import AdminTableSettings from "./pages/AdminTableSettings";
         <Route path="/admin/settings" element={<AdminSettings/>}/>
         <Route path="/admin/changepassword/:id" element={<AdminChangePassword/>}/>
         <Route path="/admin/tablesettings/:id" element={<AdminTableSettings/>}/>
+        <Route path="/admin/tableconfigure"  element={<AdminTableConfigure/>}/>
         
          </Routes>
     </Router>
