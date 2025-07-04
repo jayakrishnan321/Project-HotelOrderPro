@@ -9,6 +9,10 @@ import AdminSettings from "./pages/AdminSettings";
 import AdminChangePassword from "./pages/AdminChangePassword";
 import AdminTableSettings from "./pages/AdminTableSettings";
 import AdminTableConfigure from "./pages/AdminTableConfigure";
+import UserRegister from "./pages/UserRegister";
+import UserLogin from "./pages/UserLogin";
+import AdminUserRequest from "./pages/AdminUserRequest";
+import UserDashboard from "./pages/UserDashboard";
 
   function App() {
   return (
@@ -24,6 +28,10 @@ import AdminTableConfigure from "./pages/AdminTableConfigure";
         <Route path="/admin/changepassword/:id" element={<AdminChangePassword/>}/>
         <Route path="/admin/tablesettings/:id" element={<AdminTableSettings/>}/>
         <Route path="/admin/tableconfigure"  element={<AdminTableConfigure/>}/>
+        <Route path="/admin/adminuserrequest/:email" element={<AdminUserRequest/>}/>
+        <Route path="/users/register"  element={<UserRegister/>}/>
+        <Route path="/users/login" element={<UserLogin/>}/>
+        <Route path="/users/dashboard" element={<UserDashboard/>}/>
         
          </Routes>
     </Router>
