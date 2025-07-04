@@ -10,7 +10,8 @@ const id=decoded.id
      const [formData, setFormData] = useState({
     name: '',
     type: 'veg',
-    price: '',
+    nonacprice: '',
+    acprice:'',
     image: null,
     description: ''
   });
@@ -20,7 +21,8 @@ const id=decoded.id
     const data = new FormData();
     data.append('foodname', formData.name);
     data.append('foodtype', formData.type);
-    data.append('foodprice', formData.price);
+    data.append('foodnonacprice', formData.nonacprice);
+    data.append('foodacprice',formData.acprice)
     data.append('foodimage', formData.image);
     data.append('fooddescription', formData.description);
     data.append('adminId',id)
@@ -83,12 +85,25 @@ const id=decoded.id
         {/* Price */}
         <div>
           <label className="block mb-1 font-medium text-gray-700">
-            Price (₹)
+            Price(Non-AC) (₹)
           </label>
           <input
             type="number"
-            name="price"
-            value={formData.price}
+            name="nonacprice"
+            value={formData.nonacprice}
+            onChange={handleChange}
+            required
+            className={inputClass}
+          />
+        </div>
+        <div>
+          <label className="block mb-1 font-medium text-gray-700">
+            Price(AC) (₹)
+          </label>
+          <input
+            type="number"
+            name="acprice"
+            value={formData.acprice}
             onChange={handleChange}
             required
             className={inputClass}

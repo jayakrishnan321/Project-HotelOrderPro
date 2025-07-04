@@ -8,7 +8,8 @@ function AdminEditFood() {
   const [formData, setFormData] = useState({
     name: '',
     type: 'veg',
-    price: '',
+    nonacprice: '',
+    acprice:'',
     image: null,
     description: ''
   });
@@ -23,7 +24,8 @@ function AdminEditFood() {
         setFormData({
           name: data.foodname,
           type: data.foodtype,
-          price: data.foodprice,
+          nonacprice: data.foodnonacprice,
+          acprice:data.foodacprice,
           image: null,
           description: data.fooddescription
         });
@@ -48,7 +50,8 @@ function AdminEditFood() {
     const data = new FormData();
     data.append('foodname', formData.name);
     data.append('foodtype', formData.type);
-    data.append('foodprice', formData.price);
+    data.append('foodnonacprice', formData.nonacprice);
+    data.append('foodacprice', formData.acprice);
     data.append('fooddescription', formData.description);
     if (formData.image) {
       data.append('foodimage', formData.image);
@@ -94,11 +97,22 @@ function AdminEditFood() {
         </div>
 
         <div>
-          <label className="block mb-1">Price (₹)</label>
+          <label className="block mb-1">Price(Non AC) (₹)</label>
           <input
             type="number"
-            name="price"
-            value={formData.price}
+            name="nonacprice"
+            value={formData.nonacprice}
+            onChange={handleChange}
+            className="w-full border border-black p-2 rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block mb-1">Price(AC) (₹)</label>
+          <input
+            type="number"
+            name="acprice"
+            value={formData.acprice}
             onChange={handleChange}
             className="w-full border border-black p-2 rounded"
             required

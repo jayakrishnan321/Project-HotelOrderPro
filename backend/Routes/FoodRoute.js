@@ -25,7 +25,7 @@ const upload = multer({ storage, fileFilter: imageFilter });
 // ✅ POST route to upload food
 router.post('/upload', upload.single('foodimage'), async (req, res) => {
   try {
-    const { foodname, foodtype, foodprice, fooddescription, adminId } = req.body;
+    const { foodname, foodtype, foodnonacprice,foodacprice, fooddescription, adminId } = req.body;
 
     console.log('BODY:', req.body);        // ✅ Add for debugging
     console.log('FILE:', req.file);        // ✅ Should exist
@@ -33,7 +33,8 @@ router.post('/upload', upload.single('foodimage'), async (req, res) => {
     const food = new Food({
       foodname,
       foodtype,
-      foodprice,
+      foodnonacprice,
+      foodacprice,
       fooddescription,
       foodimage: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
       adminId
@@ -66,12 +67,13 @@ router.delete('/:id', async (req, res) => {
 });
 router.put('/edit/:id', upload.single('foodimage'), async (req, res) => {
   try {
-    const { foodname, foodtype, foodprice, fooddescription } = req.body;
+    const { foodname, foodtype, foodnonacprice,foodacprice, fooddescription } = req.body;
 
     const updateFields = {
       foodname,
       foodtype,
-      foodprice,
+      foodnonacprice,
+      foodacprice,
       fooddescription
     };
 

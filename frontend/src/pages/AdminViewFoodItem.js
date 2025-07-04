@@ -41,7 +41,8 @@ function AdminViewFoodItem() {
           <tr>
             <th className="border p-2">Name</th>
             <th className="border p-2">Type</th>
-            <th className="border p-2">Price (₹)</th>
+            <th className="border p-2">Price(Non AC) (₹)</th>
+            <th className="border p-2">Price(AC) (₹)</th>
             <th className="border p-2">Image</th>
             <th className="border p-2">Description</th>
             <th className="border p-2">Edit</th>
@@ -53,7 +54,8 @@ function AdminViewFoodItem() {
             <tr key={food._id} className="text-center">
               <td className="border p-2">{food.foodname}</td>
               <td className="border p-2 capitalize">{food.foodtype}</td>
-              <td className="border p-2">₹{food.foodprice}</td>
+              <td className="border p-2">₹{food.foodnonacprice}</td>
+              <td className="border p-2">₹{food.foodacprice}</td>
               <td className="border p-2">
                 <img src={food.foodimage} alt="food" className="w-16 h-16 object-cover mx-auto" />
               </td>
