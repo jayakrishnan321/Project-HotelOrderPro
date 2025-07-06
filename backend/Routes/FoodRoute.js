@@ -25,7 +25,7 @@ const upload = multer({ storage, fileFilter: imageFilter });
 // ✅ POST route to upload food
 router.post('/upload', upload.single('foodimage'), async (req, res) => {
   try {
-    const { foodname, foodtype, foodnonacprice,foodacprice, fooddescription, adminId } = req.body;
+    const { foodname, foodtype, foodnonacprice,foodacprice, fooddescription, adminId,adminemail } = req.body;
 
     console.log('BODY:', req.body);        // ✅ Add for debugging
     console.log('FILE:', req.file);        // ✅ Should exist
@@ -37,7 +37,8 @@ router.post('/upload', upload.single('foodimage'), async (req, res) => {
       foodacprice,
       fooddescription,
       foodimage: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
-      adminId
+      adminId,
+      adminemail
     });
 
     await food.save();
@@ -51,10 +52,16 @@ router.get('/fooditems/:id', async (req, res) => {
   const foods = await Food.find({adminId:req.params.id})
   res.json(foods);
 });
+router.get('/users/fooditems/:email', async (req, res) => {
+ const email = req.params.email.toLowerCase(); // Optional: normalize
+    const foods = await Food.find({ adminemail: email });
+  res.json(foods);
+});
 router.get('/:id',async(req,res)=>{
        const foods=await Food.findById(req.params.id)
        res.json(foods)
 })
+
 router.delete('/:id', async (req, res) => {
   try {
     const food = await Food.findByIdAndDelete(req.params.id);

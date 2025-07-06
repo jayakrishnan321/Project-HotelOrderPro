@@ -13,6 +13,8 @@ import UserRegister from "./pages/UserRegister";
 import UserLogin from "./pages/UserLogin";
 import AdminUserRequest from "./pages/AdminUserRequest";
 import UserDashboard from "./pages/UserDashboard";
+import UserSettings from "./pages/UserSettings";
+import UserViewFoodItem from "./pages/UserViewFoodItem";
 
   function App() {
   return (
@@ -32,6 +34,8 @@ import UserDashboard from "./pages/UserDashboard";
         <Route path="/users/register"  element={<UserRegister/>}/>
         <Route path="/users/login" element={<UserLogin/>}/>
         <Route path="/users/dashboard" element={<UserDashboard/>}/>
+        <Route path="/users/settings" element={<UserSettings/>}/>
+        <Route path="/users/viewfooditems" element={<UserViewFoodItem/>}/>
         
          </Routes>
     </Router>

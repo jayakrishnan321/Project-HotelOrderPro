@@ -7,7 +7,11 @@ const  FoodSchema= new mongoose.Schema({
   foodacprice: { type: String, required: true }, 
   foodimage: { type: String, required: true },
   fooddescription:{type:String,required:true},
-
+  adminemail: {
+  type: String,
+  required: true,
+  lowercase: true 
+},
   adminId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Admin',  

@@ -7,6 +7,8 @@ function AdminAddFoodItem() {
     const token=sessionStorage.getItem('token')
     const decoded = JSON.parse(atob(token.split('.')[1]));
 const id=decoded.id
+const adminemail=decoded.email
+
      const [formData, setFormData] = useState({
     name: '',
     type: 'veg',
@@ -26,6 +28,7 @@ const id=decoded.id
     data.append('foodimage', formData.image);
     data.append('fooddescription', formData.description);
     data.append('adminId',id)
+    data.append('adminemail',adminemail)
 
     try {
       const res = await axios.post('http://localhost:5000/api/foods/upload', data);

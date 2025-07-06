@@ -141,7 +141,7 @@ console.log(req.body)
 
     // Generate token
     const token = jwt.sign(
-      { id: user._id, email: user.useremail, role: 'user' },
+      { id: user._id, email: user.useremail,name:user.name, role: 'user' ,adminemail:user.adminemail},
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
