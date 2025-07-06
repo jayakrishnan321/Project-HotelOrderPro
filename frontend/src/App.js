@@ -15,6 +15,7 @@ import AdminUserRequest from "./pages/AdminUserRequest";
 import UserDashboard from "./pages/UserDashboard";
 import UserSettings from "./pages/UserSettings";
 import UserViewFoodItem from "./pages/UserViewFoodItem";
+import UserChangePassword from "./pages/UserChangePassword";
 
   function App() {
   return (
@@ -36,6 +37,7 @@ import UserViewFoodItem from "./pages/UserViewFoodItem";
         <Route path="/users/dashboard" element={<UserDashboard/>}/>
         <Route path="/users/settings" element={<UserSettings/>}/>
         <Route path="/users/viewfooditems" element={<UserViewFoodItem/>}/>
+        <Route path="/users/changepassword" element={<UserChangePassword/>}/>
         
          </Routes>
     </Router>

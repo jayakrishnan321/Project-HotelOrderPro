@@ -152,6 +152,22 @@ console.log(req.body)
     res.status(500).json({ message: 'Server error during login' });
   }
 });
+router.put('/change-password/:id',async (req,res)=>{
+  try {  const id=req.params.id
+        const user = await User.findById(id);
+        const { oldPassword, newPassword } = req.body;
 
+        const isMatch = await bcrypt.compare(oldPassword, user.password);
+        if (!isMatch) return res.status(400).json({ msg: "Old password is incorrect" });
+
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(newPassword, salt);
+        await user.save();
+
+      res.json({ msg: "Password updated successfully" });
+    } catch (err) {
+        res.status(500).json({ msg: "Error updating password" });
+    }
+})
 
 module.exports = router;
