@@ -9,6 +9,7 @@ const AdminRoutes=require('./Routes/AdminAuth')
 const FoodItems=require('./Routes/FoodRoute')
 const TableSettingsRoutes = require('./Routes/TableSettings');
 const UserRoutes=require('./Routes/UserAuth')
+const orders=require('./Routes/OrderRoute')
 
 
 app.use(cors())
@@ -20,6 +21,7 @@ app.use('/api/admin',AdminRoutes)
 app.use('/api/foods',FoodItems)
 app.use('/api/tables', TableSettingsRoutes);
 app.use('/api/users',UserRoutes)
+app.use('/api/orders',orders)
 
 mongoose.connect(process.env.MONGO_URI,{
     useNewUrlParser: true,

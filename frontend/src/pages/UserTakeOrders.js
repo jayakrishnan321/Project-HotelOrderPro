@@ -1,7 +1,9 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 function UserTakeOrders() {
+  const navigate=useNavigate()
     const [tables, setTables] = useState([]);
       const [visible, setVisible] = useState(false);
     
@@ -44,6 +46,9 @@ function UserTakeOrders() {
                 .filter((table) => table.type === 'Non-AC')
                 .map((table, index) => (
                   <div
+                     onClick={()=>{
+                     navigate(`/users/tables/${table.type}/${table.number}`)
+                  }}
                     key={index}
                     className="p-4 rounded shadow-md text-center text-white bg-green-600"
                   >
@@ -62,6 +67,9 @@ function UserTakeOrders() {
                 .filter((table) => table.type === 'AC')
                 .map((table, index) => (
                   <div
+                  onClick={()=>{
+                     navigate(`/users/tables/${table.type}/${table.number}`)
+                  }}
                     key={index}
                     className="p-4 rounded shadow-md text-center text-white bg-gray-700"
                   >
