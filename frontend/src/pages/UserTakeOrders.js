@@ -1,33 +1,32 @@
-import React, { useState } from 'react';
+import React from 'react'
+import { useState } from 'react';
 import axios from 'axios';
-
-function TableConfigure() {
-  const [tables, setTables] = useState([]);
-  const [visible, setVisible] = useState(false);
-
-  const handleViewConfig = async () => {
-    const token = sessionStorage.getItem("token");
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    const adminId = decoded.id;
+function UserTakeOrders() {
+    const [tables, setTables] = useState([]);
+      const [visible, setVisible] = useState(false);
     
-
-    try {
-      const res = await axios.get(`http://localhost:5000/api/tables/${adminId}`);
-      const { acTables = 0, nonAcTables = 0 } = res.data;
-
-      const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));
-      const nonAc = Array.from({ length: nonAcTables }, (_, i) => ({ type: 'Non-AC', number: i + 1 }));
-
-      setTables([...ac, ...nonAc]);
-      setVisible(true);
-    } catch (err) {
-      console.error(err);
-      alert('Failed to fetch table configuration');
-    }
-  };
-
+      const handleViewConfig = async () => {
+        const token = sessionStorage.getItem("token");
+        const decoded = JSON.parse(atob(token.split('.')[1]));
+        const adminemail=decoded.adminemail
+    
+        try {
+          const res = await axios.get(`http://localhost:5000/api/tables/users/${adminemail}`);
+          const { acTables = 0, nonAcTables = 0 } = res.data;
+    
+          const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));
+          const nonAc = Array.from({ length: nonAcTables }, (_, i) => ({ type: 'Non-AC', number: i + 1 }));
+    
+          setTables([...ac, ...nonAc]);
+          setVisible(true);
+        } catch (err) {
+          console.error(err);
+          alert('Failed to fetch table configuration');
+        }
+      };
+    
   return (
-    <div className="p-4">
+     <div className="p-4">
       <button
         onClick={handleViewConfig}
         className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
@@ -75,7 +74,7 @@ function TableConfigure() {
         </div>
       )}
     </div>
-  );
+  )
 }
 
-export default TableConfigure;
+export default UserTakeOrders

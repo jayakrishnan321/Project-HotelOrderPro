@@ -8,6 +8,7 @@ function AdminTableSettings() {
    const token = sessionStorage.getItem("token");
     const decoded = JSON.parse(atob(token.split('.')[1]));
     const adminId = decoded.id
+    const adminemail=decoded.email
 
   useEffect(() => {
     // Fetch existing settings
@@ -26,6 +27,7 @@ function AdminTableSettings() {
       await axios.post(`http://localhost:5000/api/tables`, {
   ...form,
   adminId,
+  adminemail
 });
 
       alert('Settings saved!');

@@ -16,6 +16,7 @@ import UserDashboard from "./pages/UserDashboard";
 import UserSettings from "./pages/UserSettings";
 import UserViewFoodItem from "./pages/UserViewFoodItem";
 import UserChangePassword from "./pages/UserChangePassword";
+import UserTakeOrders from "./pages/UserTakeOrders";
 
   function App() {
   return (
@@ -38,7 +39,7 @@ import UserChangePassword from "./pages/UserChangePassword";
         <Route path="/users/settings" element={<UserSettings/>}/>
         <Route path="/users/viewfooditems" element={<UserViewFoodItem/>}/>
         <Route path="/users/changepassword" element={<UserChangePassword/>}/>
-        
+        <Route path="/users/takeorders" element={<UserTakeOrders/>}/>
          </Routes>
     </Router>
     
