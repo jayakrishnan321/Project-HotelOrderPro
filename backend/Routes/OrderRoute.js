@@ -13,11 +13,12 @@ router.post('/add', async (req, res) => {
 
     const totalPrice = items.reduce((sum, item) => sum + item.foodprice * item.foodquantity, 0);
 
-    const existingOrder = await Orders.findOne({ 
-      tableNumber, 
-      tableType, 
-      adminemail, 
-      overallStatus: 'Uncompleted' 
+    const existingOrder = await Orders.findOne({
+      tableNumber,
+      tableType,
+      adminemail,
+      overallStatus: 'Uncompleted',
+      paymentStatus: "Pending"
     });
 
     if (existingOrder) {
@@ -32,7 +33,8 @@ router.post('/add', async (req, res) => {
         adminemail,
         items,
         totalPrice,
-        overallStatus: 'Uncompleted'
+        overallStatus: 'Uncompleted',
+        paymentStatus: "Pending"
       });
 
       await newOrder.save();
@@ -90,15 +92,15 @@ router.put('/complete', async (req, res) => {
   }
 });
 
-router.get('/allorders/:adminemail',async(req,res)=>{
-  const order=await Orders.find({adminemail:req.params.adminemail})
+router.get('/allorders/:adminemail', async (req, res) => {
+  const order = await Orders.find({ adminemail: req.params.adminemail })
   res.json(order)
 })
-router.get('/vieworders/:adminemail',async(req,res)=>{
- const orders = await Orders.find({
-  adminemail: req.params.adminemail,
-  'items.status': 'Pending',
-});
+router.get('/vieworders/:adminemail', async (req, res) => {
+  const orders = await Orders.find({
+    adminemail: req.params.adminemail,
+    'items.status': 'Pending',
+  });
 
   res.json(orders)
 })
@@ -113,7 +115,8 @@ router.get('/uncompleted/:number/:type/:adminemail', async (req, res) => {
       tableNumber: Number(number),
       tableType: type,
       adminemail,
-      overallStatus: 'Uncompleted'
+      overallStatus: 'Uncompleted',
+      paymentStatus: "Pending"
     });
 
     if (!order) {
@@ -147,6 +150,43 @@ router.put('/update/:orderId', async (req, res) => {
     res.status(500).json({ message: 'Failed to update order' });
   }
 });
+// GET /api/orders/table-status/:adminemail/:type/:number
+router.get('/table-status/:adminemail/:type/:number', async (req, res) => {
+  const { adminemail, type, number } = req.params;
+ 
+  try {
+    const order = await Orders.findOne({
+      adminemail: adminemail,
+      tableType: type,
+      tableNumber: parseInt(number),
+      overallStatus:"Completed",
+      paymentStatus: "Pending"
+    });
+
+    res.json(order);
+  } catch (err) {
+    console.error("Error fetching table order:", err);
+    res.status(500).send("Server error");
+  }
+});
+// PUT /api/orders/update-payment-status/:orderId
+router.put('/update-payment-status/:orderId', async (req, res) => {
+  const { paymentStatus } = req.body;
+
+  try {
+    const updatedOrder = await Orders.findByIdAndUpdate(
+      req.params.orderId,
+      { paymentStatus },
+      { new: true }
+    );
+    res.json(updatedOrder);
+  } catch (err) {
+    console.error("Error updating payment status:", err);
+    res.status(500).send("Failed to update payment status");
+  }
+});
+
+
 
 
 module.exports = router;

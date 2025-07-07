@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useNavigate } from 'react-router-dom';
 function TableConfigure() {
+  const navigate=useNavigate()
   const [tables, setTables] = useState([]);
   const [visible, setVisible] = useState(false);
 
@@ -45,6 +46,9 @@ function TableConfigure() {
                 .filter((table) => table.type === 'Non-AC')
                 .map((table, index) => (
                   <div
+                   onClick={()=>{
+                     navigate(`/admin/tables/${table.type}/${table.number}`)
+                  }}
                     key={index}
                     className="p-4 rounded shadow-md text-center text-white bg-green-600"
                   >
@@ -63,6 +67,9 @@ function TableConfigure() {
                 .filter((table) => table.type === 'AC')
                 .map((table, index) => (
                   <div
+                   onClick={()=>{
+                     navigate(`/admin/tables/${table.type}/${table.number}`)
+                  }}
                     key={index}
                     className="p-4 rounded shadow-md text-center text-white bg-gray-700"
                   >

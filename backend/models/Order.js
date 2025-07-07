@@ -15,6 +15,11 @@ const orderSchema = new mongoose.Schema({
   items: [itemSchema],
   totalPrice: { type: Number, required: true },
   overallStatus: { type: String, default: 'Uncompleted' }, // 'Uncompleted' or 'Completed'
+   paymentStatus: {
+    type: String,
+    enum: ["Pending", "Cash", "Online"],
+    default: "Pending"
+  },
 }, { timestamps: true });
 
 module.exports = mongoose.model('Order', orderSchema);
