@@ -19,6 +19,7 @@ import UserChangePassword from "./pages/UserChangePassword";
 import UserTakeOrders from "./pages/UserTakeOrders";
 import UserDisplayOrders from "./pages/UserDisplayOrders";
 import UserAllOrders from "./pages/UserAllOrders";
+import UserViewOrders from "./pages/UserViewOrders";
 
   function App() {
   return (
@@ -44,6 +45,7 @@ import UserAllOrders from "./pages/UserAllOrders";
         <Route path="/users/takeorders" element={<UserTakeOrders/>}/>
         <Route path="/users/tables/:type/:number" element={<UserDisplayOrders/>}/>
         <Route path="/users/allorders" element={<UserAllOrders/>}/>
+        <Route path="/users/vieworders" element={<UserViewOrders/>}/>
          </Routes>
     </Router>
     

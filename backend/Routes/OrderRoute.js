@@ -94,6 +94,14 @@ router.get('/allorders/:adminemail',async(req,res)=>{
   const order=await Orders.find({adminemail:req.params.adminemail})
   res.json(order)
 })
+router.get('/vieworders/:adminemail',async(req,res)=>{
+ const orders = await Orders.find({
+  adminemail: req.params.adminemail,
+  'items.status': 'Pending',
+});
+
+  res.json(orders)
+})
 
 // 🔍 Get Uncompleted Order by Table Number + Type + Admin
 // GET /api/orders/uncompleted/:number/:type/:adminemail
