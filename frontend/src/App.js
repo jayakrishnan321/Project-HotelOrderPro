@@ -18,6 +18,7 @@ import UserViewFoodItem from "./pages/UserViewFoodItem";
 import UserChangePassword from "./pages/UserChangePassword";
 import UserTakeOrders from "./pages/UserTakeOrders";
 import UserDisplayOrders from "./pages/UserDisplayOrders";
+import UserAllOrders from "./pages/UserAllOrders";
 
   function App() {
   return (
@@ -42,6 +43,7 @@ import UserDisplayOrders from "./pages/UserDisplayOrders";
         <Route path="/users/changepassword" element={<UserChangePassword/>}/>
         <Route path="/users/takeorders" element={<UserTakeOrders/>}/>
         <Route path="/users/tables/:type/:number" element={<UserDisplayOrders/>}/>
+        <Route path="/users/allorders" element={<UserAllOrders/>}/>
          </Routes>
     </Router>
     

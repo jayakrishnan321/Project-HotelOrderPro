@@ -18,6 +18,10 @@ const name=decoded.name
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">Take orders</p>
       </div>
+       <div onClick={() => { navigate('/users/allorders') }}
+        className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
+        <p className="text-lg font-semibold text-blue-700">All  orders</p>
+      </div>
       <div onClick={() => { navigate('/admin/addfooditem') }}
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">View  orders</p>
