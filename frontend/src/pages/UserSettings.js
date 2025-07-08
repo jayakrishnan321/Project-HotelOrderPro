@@ -1,11 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 function UserSettings() {
-    const navigate=useNavigate()
-    const handlelogout = () => {
-        sessionStorage.clear()
-        navigate('/users/login')
-    }
+  const navigate = useNavigate()
+  const handlelogout = () => {
+    sessionStorage.clear()
+    navigate('/users/login')
+  }
   return (
     <div className="mt-5 p-6 bg-white w-1/2 mx-auto rounded-xl shadow-md max-w-md">
       <div onClick={() => { navigate('/users/changepassword') }}

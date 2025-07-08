@@ -9,7 +9,7 @@ function AdminEditFood() {
     name: '',
     type: 'veg',
     nonacprice: '',
-    acprice:'',
+    acprice: '',
     image: null,
     description: ''
   });
@@ -25,7 +25,7 @@ function AdminEditFood() {
           name: data.foodname,
           type: data.foodtype,
           nonacprice: data.foodnonacprice,
-          acprice:data.foodacprice,
+          acprice: data.foodacprice,
           image: null,
           description: data.fooddescription
         });

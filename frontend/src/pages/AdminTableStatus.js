@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function AdminTableStatus() {
-    const navigate=useNavigate()
+  const navigate = useNavigate()
   const { type, number } = useParams();
   const [order, setOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState('');
@@ -51,25 +51,28 @@ function AdminTableStatus() {
           <p><strong>Table No:</strong> {order.tableNumber}</p>
           <p><strong>Type:</strong> {order.tableType}</p>
           <p><strong>Total:</strong> ₹{order.totalPrice}</p>
+          {order.overallStatus === "Completed" && (
+            <div className="mt-4">
+              <label className="font-semibold">Payment Status:</label>
+              <select
+                value={selectedStatus}
+                onChange={handleStatusChange}
+                className="ml-2 border border-gray-400 rounded px-2 py-1"
+              >
+                <option value="Pending">Pending</option>
+                <option value="Cash">Cash</option>
+                <option value="Online">Online</option>
+                <option value="Mixed">Mixed</option>
+              </select>
+              <button
+                onClick={saveStatus}
+                className="ml-4 bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
+              >
+                Save
+              </button>
+            </div>
+          )}
 
-          <div className="mt-4">
-            <label className="font-semibold">Payment Status:</label>
-            <select
-              value={selectedStatus}
-              onChange={handleStatusChange}
-              className="ml-2 border border-gray-400 rounded px-2 py-1"
-            >
-              <option value="Pending">Pending</option>
-              <option value="Cash">Cash</option>
-              <option value="Online">Online</option>
-            </select>
-            <button
-              onClick={saveStatus}
-              className="ml-4 bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
-            >
-              Save
-            </button>
-          </div>
 
           <h2 className="mt-6 font-semibold">Items:</h2>
           <ul className="list-disc pl-5">

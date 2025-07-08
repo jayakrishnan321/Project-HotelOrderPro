@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function AdminUserRequest() {
-    const navigate=useNavigate()
+  const navigate = useNavigate()
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
@@ -59,9 +59,10 @@ function AdminUserRequest() {
                   <td className="border p-2 space-x-2">
                     <button
                       onClick={() => {
-                        if(window.confirm('do you want to approve this user')){
-                    handleStatusChange(user._id, 'approved')}
-                        }            
+                        if (window.confirm('do you want to approve this user')) {
+                          handleStatusChange(user._id, 'approved')
+                        }
+                      }
                       }
                       className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
                     >
@@ -69,8 +70,8 @@ function AdminUserRequest() {
                     </button>
                     <button
                       onClick={() => {
-                        if(window.confirm('do you want to reject this user')){
-                                 handleStatusChange(user._id, 'rejected')
+                        if (window.confirm('do you want to reject this user')) {
+                          handleStatusChange(user._id, 'rejected')
                         }
                       }}
                       className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"

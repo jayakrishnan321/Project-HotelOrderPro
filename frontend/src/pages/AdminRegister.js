@@ -3,19 +3,19 @@ import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 function AdminRegister() {
-    const navigate=useNavigate()
-    const [form, setForm] = useState({
-        name:'',
+  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    name: '',
     email: '',
     password: '',
     confirmPassword: '',
-    mobilenumber:'',
+    mobilenumber: '',
     secretKey: ''
   });
 
   const [otpSent, setOtpSent] = useState(false);
   const [otp, setOtp] = useState('');
-const handleSendOtp=async()=>{
+  const handleSendOtp = async () => {
     if (!form.email || !form.password || !form.confirmPassword || !form.secretKey) {
       alert('All fields are required');
       return;
@@ -24,7 +24,7 @@ const handleSendOtp=async()=>{
       alert('Passwords do not match');
       return;
     }
-      try {
+    try {
       const res = await axios.post('http://localhost:5000/api/admin/send-otp', form);
       alert(res.data.message);
       setOtpSent(true);
@@ -32,17 +32,17 @@ const handleSendOtp=async()=>{
       alert(err.response?.data?.message || 'Error sending OTP');
     }
 
-}
-const handleVerifyOtp=async()=>{
-   if (!otp) {
+  }
+  const handleVerifyOtp = async () => {
+    if (!otp) {
       alert('Enter OTP');
       return;
     }
-        try {
+    try {
       const res = await axios.post('http://localhost:5000/api/admin/verify-otp', {
-        name:form.name,
+        name: form.name,
         email: form.email,
-        mobilenumber:form.mobilenumber,
+        mobilenumber: form.mobilenumber,
         otp
       });
       alert(res.data.message);
@@ -50,10 +50,10 @@ const handleVerifyOtp=async()=>{
     } catch (err) {
       alert(err.response?.data?.message || 'Invalid OTP');
     }
-}
-    const handleChange=(e)=>{
-       setForm({ ...form, [e.target.name]: e.target.value });
-    }
+  }
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
@@ -63,12 +63,12 @@ const handleVerifyOtp=async()=>{
 
         {!otpSent ? (
           <><input
-              className="w-full p-2 border rounded mb-3"
-              type="name"
-              name="name"
-              placeholder="Name"
-              onChange={handleChange}
-            />
+            className="w-full p-2 border rounded mb-3"
+            type="name"
+            name="name"
+            placeholder="Name"
+            onChange={handleChange}
+          />
             <input
               className="w-full p-2 border rounded mb-3"
               type="email"
@@ -90,7 +90,7 @@ const handleVerifyOtp=async()=>{
               placeholder="Confirm Password"
               onChange={handleChange}
             />
-              <input
+            <input
               className="w-full p-2 border rounded mb-3"
               type="tel"
               name="mobilenumber"

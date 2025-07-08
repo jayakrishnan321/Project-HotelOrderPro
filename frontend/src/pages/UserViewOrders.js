@@ -12,7 +12,7 @@ function UserViewOrders() {
         const adminemail = decoded.adminemail;
 
         const res = await axios.get(`http://localhost:5000/api/orders/vieworders/${adminemail}`);
-        
+
         // Filter only items with status = "Pending"
         const filteredOrders = res.data.map(order => ({
           ...order,
@@ -27,6 +27,27 @@ function UserViewOrders() {
 
     fetchPending();
   }, []);
+  const handlePendingClick = async (orderId, itemId) => {
+  try {
+    await axios.put(`http://localhost:5000/api/orders/update-status/${orderId}/${itemId}`);
+
+    // After successful update, refresh the list
+    setOrders((prevOrders) =>
+      prevOrders
+        .map((order) => {
+          if (order._id === orderId) {
+            const updatedItems = order.items.filter((item) => item._id !== itemId);
+            return { ...order, items: updatedItems };
+          }
+          return order;
+        })
+        .filter((order) => order.items.length > 0)
+    );
+  } catch (err) {
+    console.error("Failed to update status:", err);
+  }
+};
+
 
   return (
     <div className="p-6">
@@ -58,7 +79,13 @@ function UserViewOrders() {
                     <td className="p-2 border">{item.foodquantity}</td>
                     <td className="p-2 border">₹{item.foodprice}</td>
                     <td className="p-2 border">₹{item.total}</td>
-                    <td className="p-2 border text-yellow-600 font-semibold">{item.status}</td>
+                    <td
+                      onClick={() => handlePendingClick(order._id, item._id)}
+                      className="p-2 border text-yellow-600 font-semibold cursor-pointer hover:text-green-600"
+                    >
+                      {item.status}
+                    </td>
+
                   </tr>
                 ))
               )}

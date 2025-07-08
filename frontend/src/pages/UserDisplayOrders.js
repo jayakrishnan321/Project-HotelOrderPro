@@ -69,9 +69,9 @@ function UserDisplayOrders() {
 
   const handleSave = async () => {
     const payload = {
-    items,
-    orderStatus,  // include this to retain the current status
-  };
+      items,
+      orderStatus,  // include this to retain the current status
+    };
     try {
       if (orderId) {
         await axios.put(`http://localhost:5000/api/orders/update/${orderId}`, payload);
@@ -110,24 +110,24 @@ function UserDisplayOrders() {
     setItems(updated);
   };
 
- const handleCompleteOrder = async () => {
-  try {
-    const payload = {
-      tableNumber: number,
-      tableType: type,
-      adminemail,
-      orderStatus: 'Completed'
-    };
+  const handleCompleteOrder = async () => {
+    try {
+      const payload = {
+        tableNumber: number,
+        tableType: type,
+        adminemail,
+        orderStatus: 'Completed'
+      };
 
-    await axios.put('http://localhost:5000/api/orders/complete', payload);
-    setOrderStatus('Completed');
-    alert('Order marked as completed');
-    navigate('/users/dashboard')
-  } catch (err) {
-    console.error(err);
-    alert('Failed to complete order');
-  }
-};
+      await axios.put('http://localhost:5000/api/orders/complete', payload);
+      setOrderStatus('Completed');
+      alert('Order marked as completed');
+      navigate('/users/dashboard')
+    } catch (err) {
+      console.error(err);
+      alert('Failed to complete order');
+    }
+  };
 
 
   return (

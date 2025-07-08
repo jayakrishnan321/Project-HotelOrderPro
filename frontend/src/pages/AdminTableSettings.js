@@ -3,12 +3,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 function AdminTableSettings() {
-    const navigate=useNavigate()
+  const navigate = useNavigate()
   const [form, setForm] = useState({ acTables: '', nonAcTables: '' });
-   const token = sessionStorage.getItem("token");
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    const adminId = decoded.id
-    const adminemail=decoded.email
+  const token = sessionStorage.getItem("token");
+  const decoded = JSON.parse(atob(token.split('.')[1]));
+  const adminId = decoded.id
+  const adminemail = decoded.email
 
   useEffect(() => {
     // Fetch existing settings
@@ -25,10 +25,10 @@ function AdminTableSettings() {
     e.preventDefault();
     try {
       await axios.post(`http://localhost:5000/api/tables`, {
-  ...form,
-  adminId,
-  adminemail
-});
+        ...form,
+        adminId,
+        adminemail
+      });
 
       alert('Settings saved!');
       navigate('/admin/settings')

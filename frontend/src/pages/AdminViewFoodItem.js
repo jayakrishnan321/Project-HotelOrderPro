@@ -1,29 +1,33 @@
 import React from 'react'
-import { useState,useEffect,useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function AdminViewFoodItem() {
-     const [foods, setFoods] = useState([]);
-     const token = sessionStorage.getItem('token')
- const decoded = JSON.parse(atob(token.split('.')[1]));
- const id=decoded.id
+  const [foods, setFoods] = useState([]);
+  const [searchName, setSearchName] = useState('');
+  const [searchType, setSearchType] = useState('');
+  const [searchPrice, setSearchPrice] = useState('');
 
- const navigate=useNavigate()
-    // Fetch all food items
-   const fetchFoods = useCallback(async () => {
-  try {
-    const res = await axios.get(`http://localhost:5000/api/foods/fooditems/${id}`);
-    setFoods(res.data);
-  } catch (err) {
-    console.error('Failed to fetch foods', err);
-  }
-}, [id]);
+  const token = sessionStorage.getItem('token')
+  const decoded = JSON.parse(atob(token.split('.')[1]));
+  const id = decoded.id
 
-   useEffect(() => {
-  fetchFoods();
-}, [fetchFoods]);
-    
-    const handleDelete = async (id) => {
+  const navigate = useNavigate()
+  // Fetch all food items
+  const fetchFoods = useCallback(async () => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/foods/fooditems/${id}`);
+      setFoods(res.data);
+    } catch (err) {
+      console.error('Failed to fetch foods', err);
+    }
+  }, [id]);
+
+  useEffect(() => {
+    fetchFoods();
+  }, [fetchFoods]);
+
+  const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
         await axios.delete(`http://localhost:5000/api/foods/${id}`);
@@ -33,9 +37,43 @@ function AdminViewFoodItem() {
       }
     }
   };
+  const filteredFoods = foods.filter((food) => {
+    const matchesName = food.foodname.toLowerCase().includes(searchName.toLowerCase());
+    const matchesType = food.foodtype.toLowerCase().includes(searchType.toLowerCase());
+    const matchesPrice =
+      searchPrice === '' ||
+      food.foodacprice.toString().includes(searchPrice) ||
+      food.foodnonacprice.toString().includes(searchPrice);
+    return matchesName && matchesType && matchesPrice;
+  });
+
   return (
-     <div className="overflow-x-auto p-4">
+    <div className="overflow-x-auto p-4">
       <h2 className="text-2xl font-semibold mb-4">Food Items</h2>
+      <div className="flex flex-wrap gap-4 mb-4">
+        <input
+          type="text"
+          placeholder="Search by name"
+          value={searchName}
+          onChange={(e) => setSearchName(e.target.value)}
+          className="border px-3 py-1 rounded"
+        />
+        <input
+          type="text"
+          placeholder="Search by type"
+          value={searchType}
+          onChange={(e) => setSearchType(e.target.value)}
+          className="border px-3 py-1 rounded"
+        />
+        <input
+          type="number"
+          placeholder="Search by price"
+          value={searchPrice}
+          onChange={(e) => setSearchPrice(e.target.value)}
+          className="border px-3 py-1 rounded"
+        />
+      </div>
+
       <table className="min-w-full table-auto border border-collapse border-gray-300">
         <thead className="bg-gray-200">
           <tr>
@@ -50,7 +88,7 @@ function AdminViewFoodItem() {
           </tr>
         </thead>
         <tbody>
-          {foods.map((food) => (
+          {filteredFoods.map((food) => (
             <tr key={food._id} className="text-center">
               <td className="border p-2">{food.foodname}</td>
               <td className="border p-2 capitalize">{food.foodtype}</td>
@@ -63,9 +101,9 @@ function AdminViewFoodItem() {
               <td className="border p-2">
                 <button
                   className="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500"
-                  onClick={() =>{
-                       navigate(`/admin/editfooditem/${food._id}`)
-                  } }
+                  onClick={() => {
+                    navigate(`/admin/editfooditem/${food._id}`)
+                  }}
                 >
                   Edit
                 </button>

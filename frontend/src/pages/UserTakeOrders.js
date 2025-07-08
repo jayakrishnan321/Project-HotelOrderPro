@@ -3,32 +3,32 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function UserTakeOrders() {
-  const navigate=useNavigate()
-    const [tables, setTables] = useState([]);
-      const [visible, setVisible] = useState(false);
-    
-      const handleViewConfig = async () => {
-        const token = sessionStorage.getItem("token");
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        const adminemail=decoded.adminemail
-    
-        try {
-          const res = await axios.get(`http://localhost:5000/api/tables/users/${adminemail}`);
-          const { acTables = 0, nonAcTables = 0 } = res.data;
-    
-          const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));
-          const nonAc = Array.from({ length: nonAcTables }, (_, i) => ({ type: 'Non-AC', number: i + 1 }));
-    
-          setTables([...ac, ...nonAc]);
-          setVisible(true);
-        } catch (err) {
-          console.error(err);
-          alert('Failed to fetch table configuration');
-        }
-      };
-    
+  const navigate = useNavigate()
+  const [tables, setTables] = useState([]);
+  const [visible, setVisible] = useState(false);
+
+  const handleViewConfig = async () => {
+    const token = sessionStorage.getItem("token");
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    const adminemail = decoded.adminemail
+
+    try {
+      const res = await axios.get(`http://localhost:5000/api/tables/users/${adminemail}`);
+      const { acTables = 0, nonAcTables = 0 } = res.data;
+
+      const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));
+      const nonAc = Array.from({ length: nonAcTables }, (_, i) => ({ type: 'Non-AC', number: i + 1 }));
+
+      setTables([...ac, ...nonAc]);
+      setVisible(true);
+    } catch (err) {
+      console.error(err);
+      alert('Failed to fetch table configuration');
+    }
+  };
+
   return (
-     <div className="p-4">
+    <div className="p-4">
       <button
         onClick={handleViewConfig}
         className="bg-blue-600 text-white px-4 py-2 rounded mb-4"
@@ -46,9 +46,9 @@ function UserTakeOrders() {
                 .filter((table) => table.type === 'Non-AC')
                 .map((table, index) => (
                   <div
-                     onClick={()=>{
-                     navigate(`/users/tables/${table.type}/${table.number}`)
-                  }}
+                    onClick={() => {
+                      navigate(`/users/tables/${table.type}/${table.number}`)
+                    }}
                     key={index}
                     className="p-4 rounded shadow-md text-center text-white bg-green-600"
                   >
@@ -67,9 +67,9 @@ function UserTakeOrders() {
                 .filter((table) => table.type === 'AC')
                 .map((table, index) => (
                   <div
-                  onClick={()=>{
-                     navigate(`/users/tables/${table.type}/${table.number}`)
-                  }}
+                    onClick={() => {
+                      navigate(`/users/tables/${table.type}/${table.number}`)
+                    }}
                     key={index}
                     className="p-4 rounded shadow-md text-center text-white bg-gray-700"
                   >

@@ -159,7 +159,6 @@ router.get('/table-status/:adminemail/:type/:number', async (req, res) => {
       adminemail: adminemail,
       tableType: type,
       tableNumber: parseInt(number),
-      overallStatus:"Completed",
       paymentStatus: "Pending"
     });
 
@@ -185,6 +184,26 @@ router.put('/update-payment-status/:orderId', async (req, res) => {
     res.status(500).send("Failed to update payment status");
   }
 });
+// routes/order.js or similar
+router.put('/update-status/:orderId/:itemId', async (req, res) => {
+  const { orderId, itemId } = req.params;
+
+  try {
+    const order = await Orders.findById(orderId);
+    if (!order) return res.status(404).json({ message: "Order not found" });
+
+    const item = order.items.id(itemId);
+    if (!item) return res.status(404).json({ message: "Item not found" });
+
+    item.status = "Delivered";
+    await order.save();
+
+    res.json({ message: "Item status updated to Delivered", order });
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err });
+  }
+});
+
 
 
 
