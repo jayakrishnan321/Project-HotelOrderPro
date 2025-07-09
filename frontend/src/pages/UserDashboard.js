@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect,useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 function UserDashboard() {
-  const navigate = useNavigate()
-  const token = sessionStorage.getItem('token')
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const name = decoded.name
+   const navigate = useNavigate();
+  const [name, setName] = useState('');
+
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+
+    if (!token) {
+      navigate('/users/login');
+      return; // Prevent further execution
+    }
+
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setName(decoded.name);
+    } catch (err) {
+      console.error('Invalid token format:', err);
+      navigate('/users/login');
+    }
+  }, [navigate]);
 
   return (
     <div className="mt-5 p-6 bg-white w-1/2 mx-auto rounded-xl shadow-md max-w-md">

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -15,11 +15,15 @@ function AdminAllOrders() {
   const decoded = JSON.parse(atob(token.split('.')[1]));
   const adminemail = decoded.email;
 
-  const fetchallorders = async () => {
+ 
+ 
+  useEffect(()=>{
+     const fetchallorders = async () => {
     const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
     setOrders(res.data)
   }
-  fetchallorders()
+    fetchallorders()
+  })
   const filteredOrders = orders.filter(order => {
     const matchTableNumber = order.tableNumber.toString().includes(searchTableNumber);
     const matchType = order.tableType.toLowerCase().includes(searchTableType.toLowerCase());
