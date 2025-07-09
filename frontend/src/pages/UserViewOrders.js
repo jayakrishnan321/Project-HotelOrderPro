@@ -1,15 +1,30 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function UserViewOrders() {
+  const navigate=useNavigate()
   const [orders, setOrders] = useState([]);
-
+  const [adminemail,setAdminemail]=useState('')
+useEffect(()=>{
+         const token = sessionStorage.getItem("token");
+         if(!token){
+          navigate('/users/login')
+         }
+         try{
+         const decoded = JSON.parse(atob(token.split('.')[1]));
+        setAdminemail(decoded.adminemail)
+         }catch(err){
+          console.log(err)
+          navigate('/users/login')
+         }
+        
+},[navigate])
   useEffect(() => {
     const fetchPending = async () => {
+      if(!adminemail) return;
       try {
-        const token = sessionStorage.getItem("token");
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        const adminemail = decoded.adminemail;
+      
 
         const res = await axios.get(`http://localhost:5000/api/orders/vieworders/${adminemail}`);
 
@@ -26,7 +41,7 @@ function UserViewOrders() {
     };
 
     fetchPending();
-  }, []);
+  }, [adminemail]);
   const handlePendingClick = async (orderId, itemId) => {
   try {
     await axios.put(`http://localhost:5000/api/orders/update-status/${orderId}/${itemId}`);

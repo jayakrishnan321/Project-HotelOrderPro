@@ -11,18 +11,33 @@ function UserDisplayOrders() {
   const [editIndex, setEditIndex] = useState(null);
   const [orderStatus, setOrderStatus] = useState('Uncompleted');
   const [orderId, setOrderId] = useState(null);
-  const token = sessionStorage.getItem('token');
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const adminemail = decoded.adminemail;
+  const [adminemail, setAdminemail] = useState('');
   const priceKey = type === 'AC' ? 'foodacprice' : 'foodnonacprice';
+useEffect(() => {
+  const token = sessionStorage.getItem('token');
+  if (!token) {
+    navigate('/users/login');
+    return;
+  }
 
+  try {
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    setAdminemail(decoded.adminemail);
+  } catch (err) {
+    console.error('Invalid token:', err);
+    navigate('/users/login');
+    return;
+  }
+}, [navigate]);
   useEffect(() => {
+    if (!adminemail) return;
     const fetchFoods = async () => {
       const res = await axios.get(`http://localhost:5000/api/foods/users/fooditems/${adminemail}`);
       setFoods(res.data);
     };
 
     const fetchUncompletedOrder = async () => {
+      
       try {
         const res = await axios.get(`http://localhost:5000/api/orders/uncompleted/${number}/${type}/${adminemail}`);
         const existingOrder = res.data;

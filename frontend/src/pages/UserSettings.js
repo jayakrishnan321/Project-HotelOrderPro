@@ -1,7 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 function UserSettings() {
   const navigate = useNavigate()
+  useEffect(()=>{
+    const token =sessionStorage.getItem('token')
+    if(!token){
+      navigate('/users/login')
+    }
+  })
   const handlelogout = () => {
     sessionStorage.clear()
     navigate('/users/login')

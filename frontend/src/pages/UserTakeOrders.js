@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -6,11 +6,26 @@ function UserTakeOrders() {
   const navigate = useNavigate()
   const [tables, setTables] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [adminemail,setAdminemail]=useState('')
 
-  const handleViewConfig = async () => {
-    const token = sessionStorage.getItem("token");
+  useEffect(() => {
+  const token = sessionStorage.getItem("token");
+
+  if (!token) {
+    navigate("/users/login");
+    return;
+  }
+
+  try {
     const decoded = JSON.parse(atob(token.split('.')[1]));
-    const adminemail = decoded.adminemail
+    setAdminemail(decoded.adminemail);
+  } catch (err) {
+    console.error("Invalid token:", err);
+    navigate("/users/login");
+  }
+}, [navigate]);
+  const handleViewConfig = async () => {
+    
 
     try {
       const res = await axios.get(`http://localhost:5000/api/tables/users/${adminemail}`);

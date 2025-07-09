@@ -1,7 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 function UserAllOrders() {
+  const navigate=useNavigate()
   const [orders, setOrders] = useState([]);
   const [searchTableNumber, setSearchTableNumber] = useState('');
   const [searchTableType, setSearchTableType] = useState('');
@@ -9,22 +10,29 @@ function UserAllOrders() {
   const [searchStatus, setSearchStatus] = useState('');
   const [searchPaymentStatus, setSearchPaymentStatus] = useState('');
   const [searchDate, setSearchDate] = useState('');
-  useEffect(() => {
+   useEffect(() => {
     const fetchAllOrders = async () => {
+      const token = sessionStorage.getItem("token");
+
+      if (!token) {
+        navigate("/users/login");
+        return;
+      }
+
       try {
-        const token = sessionStorage.getItem("token");
-        const decoded = JSON.parse(atob(token.split('.')[1]));
+        const decoded = JSON.parse(atob(token.split(".")[1]));
         const adminemail = decoded.adminemail;
 
         const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
         setOrders(res.data);
       } catch (error) {
-        console.error("Error fetching orders:", error);
+        navigate("/users/login");
       }
     };
 
     fetchAllOrders();
-  }, []);
+  }, [navigate]);
+
   const filteredOrders = orders.filter(order => {
     const matchTableNumber = order.tableNumber.toString().includes(searchTableNumber);
     const matchType = order.tableType.toLowerCase().includes(searchTableType.toLowerCase());

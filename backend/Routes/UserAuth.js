@@ -125,7 +125,7 @@ router.patch('/status/:id', async (req, res) => {
 });
 router.post('/login', async (req, res) => {
   const { useremail, password } = req.body;
-console.log(req.body)
+
   try {
     const user = await User.findOne({ useremail });
     if (!user) return res.status(400).json({ message: 'User not found' });

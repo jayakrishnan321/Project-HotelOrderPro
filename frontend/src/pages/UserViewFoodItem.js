@@ -1,17 +1,32 @@
 import React from 'react'
 import { useState,useEffect,useCallback } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function UserViewFoodItem() {
+  const navigate=useNavigate()
      const [foods, setFoods] = useState([]);
        const [searchName, setSearchName] = useState('');
      const [searchType, setSearchType] = useState('');
      const [searchPrice, setSearchPrice] = useState('');
-     
-       const token = sessionStorage.getItem('token')
-   const decoded = JSON.parse(atob(token.split('.')[1]));
-   const adminemail=decoded.adminemail
-  console.log(adminemail)
+     const[adminemail,setAdminemail]=useState('')
+
+  
+  useEffect(()=>{
+     const token = sessionStorage.getItem('token')
+     if(!token){
+      navigate('/users/login')
+      return
+     }
+     try{
+       const decoded = JSON.parse(atob(token.split('.')[1]));
+  setAdminemail(decoded.adminemail)
+     }catch(err){
+        console.log(err)
+        navigate('/users/login')
+     }
+  
+  },[navigate])
       // Fetch all food items
      const fetchFoods = useCallback(async () => {
     try {
