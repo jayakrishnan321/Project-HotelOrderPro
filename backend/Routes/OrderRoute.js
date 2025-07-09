@@ -105,8 +105,7 @@ router.get('/vieworders/:adminemail', async (req, res) => {
   res.json(orders)
 })
 
-// 🔍 Get Uncompleted Order by Table Number + Type + Admin
-// GET /api/orders/uncompleted/:number/:type/:adminemail
+
 router.get('/uncompleted/:number/:type/:adminemail', async (req, res) => {
   const { number, type, adminemail } = req.params;
 
@@ -153,7 +152,7 @@ router.put('/update/:orderId', async (req, res) => {
 // GET /api/orders/table-status/:adminemail/:type/:number
 router.get('/table-status/:adminemail/:type/:number', async (req, res) => {
   const { adminemail, type, number } = req.params;
- 
+
   try {
     const order = await Orders.findOne({
       adminemail: adminemail,

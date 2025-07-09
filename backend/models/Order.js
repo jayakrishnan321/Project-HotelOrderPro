@@ -5,7 +5,7 @@ const itemSchema = new mongoose.Schema({
   foodprice: { type: Number, required: true },
   foodquantity: { type: Number, required: true },
   total: { type: Number, required: true },
-  status: { type: String, default: 'Pending' }, // 'Pending' or 'Delivered'
+  status: { type: String, default: 'Pending' }, 
 });
 
 const orderSchema = new mongoose.Schema({
@@ -14,10 +14,10 @@ const orderSchema = new mongoose.Schema({
   adminemail: { type: String, required: true },
   items: [itemSchema],
   totalPrice: { type: Number, required: true },
-  overallStatus: { type: String, default: 'Uncompleted' }, // 'Uncompleted' or 'Completed'
+  overallStatus: { type: String, default: 'Uncompleted' }, 
    paymentStatus: {
     type: String,
-    enum: ["Pending", "Cash", "Online"],
+    enum: ["Pending", "Cash", "Online","Mixed"],
     default: "Pending"
   },
 }, { timestamps: true });

@@ -22,6 +22,7 @@ import UserAllOrders from "./pages/UserAllOrders";
 import UserViewOrders from "./pages/UserViewOrders";
 import AdminAllOrders from "./pages/AdminAllOrders";
 import AdminTableStatus from "./pages/AdminTableStatus";
+import AdminUserlist from "./pages/AdminUserlist";
 
   function App() {
   return (
@@ -40,6 +41,7 @@ import AdminTableStatus from "./pages/AdminTableStatus";
         <Route path="/admin/adminuserrequest/:email" element={<AdminUserRequest/>}/>
         <Route path="/admin/allorders" element={<AdminAllOrders/>}/>
         <Route path="/admin/tables/:type/:number" element={<AdminTableStatus/>}/>
+        <Route path="/admin/userlist" element={<AdminUserlist/>}/>
         <Route path="/users/register"  element={<UserRegister/>}/>
         <Route path="/users/login" element={<UserLogin/>}/>
         <Route path="/users/dashboard" element={<UserDashboard/>}/>

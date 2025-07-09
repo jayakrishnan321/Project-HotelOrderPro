@@ -44,6 +44,10 @@ function AdminDashboard() {
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">view Table Configuration</p>
       </div>
+       <div onClick={() => { navigate(`/admin/userlist`) }}
+        className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
+        <p className="text-lg font-semibold text-blue-700">User list</p>
+      </div>
       <div onClick={() => { navigate('/admin/settings') }}
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">Settings</p>

@@ -6,6 +6,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 
 const Admin=require('../models/Admin')
+const User=require('../models/User')
 
 const otpStore = {};
 
@@ -104,6 +105,15 @@ router.put('/change-password/:id',async (req,res)=>{
       res.json({ msg: "Password updated successfully" });
     } catch (err) {
         res.status(500).json({ msg: "Error updating password" });
+    }
+})
+router.get('/userlist/:adminemail',async(req,res)=>{
+    const email=req.params.adminemail
+    try{
+    const users=await User.find({adminemail:email})
+    res.json(users)
+    }catch(err){
+      res.send(err)
     }
 })
 
