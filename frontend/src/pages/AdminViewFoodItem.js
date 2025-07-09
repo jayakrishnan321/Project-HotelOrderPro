@@ -7,25 +7,39 @@ function AdminViewFoodItem() {
   const [searchName, setSearchName] = useState('');
   const [searchType, setSearchType] = useState('');
   const [searchPrice, setSearchPrice] = useState('');
-
-  const token = sessionStorage.getItem('token')
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const id = decoded.id
-
+  
   const navigate = useNavigate()
+  const [id,setId]=useState('')
+   useEffect(()=>{
+  const token = sessionStorage.getItem('token')
+  if(!token){
+     navigate('/admin/login')
+  }
+  try{
+     const decoded = JSON.parse(atob(token.split('.')[1]));
+  setId(decoded.id)
+  }catch(err){
+    console.log(err)
+    navigate('/admin/login')
+  }
+   },[navigate])
+ 
+
   // Fetch all food items
   const fetchFoods = useCallback(async () => {
     try {
       const res = await axios.get(`http://localhost:5000/api/foods/fooditems/${id}`);
       setFoods(res.data);
+      console.log(res.data)
     } catch (err) {
       console.error('Failed to fetch foods', err);
     }
   }, [id]);
 
   useEffect(() => {
+    if(!id)return;
     fetchFoods();
-  }, [fetchFoods]);
+  }, [fetchFoods,id]);
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {

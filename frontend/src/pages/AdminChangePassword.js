@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState ,useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function AdminChangePassword() {
@@ -8,10 +8,24 @@ function AdminChangePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
-  const token = sessionStorage.getItem("token");
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const id = decoded.id
 
+const[id,setid]=useState('')
+  useEffect(()=>{
+         const token = sessionStorage.getItem('token')
+         if(!token){
+          navigate('/admin/login')
+          return
+         }
+         try{
+          const decoded = JSON.parse(atob(token.split('.')[1]));
+          setid(decoded.id)
+  
+         }catch(err){
+          console.log(err)
+          navigate('/admin/login')
+  
+         }
+  },[navigate])
   const handleSubmit = async (id) => {
     if (newPassword !== confirmPassword) {
       alert("New and confirm passwords do not match");

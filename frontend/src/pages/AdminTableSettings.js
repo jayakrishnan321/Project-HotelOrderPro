@@ -5,17 +5,32 @@ import { useNavigate } from 'react-router-dom';
 function AdminTableSettings() {
   const navigate = useNavigate()
   const [form, setForm] = useState({ acTables: '', nonAcTables: '' });
-  const token = sessionStorage.getItem("token");
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const adminId = decoded.id
-  const adminemail = decoded.email
+  const [token,settoken]=useState('')
+  const [adminemail,setAdminemail]=useState('')
+const [adminId,setadminId]=useState('')
+useEffect(()=>{
+  
+    const token = sessionStorage.getItem("token");
+    settoken(token)
+    if(!token){
+      navigate('/admin/login')
+    }try{
+     
+    const decoded = JSON.parse(atob(token.split('.')[1]));
+    setadminId(decoded.id)
+    setAdminemail(decoded.email)
+    }catch(err){
+      console.log(err)
+      navigate('/admin/login')
+    }
 
+},[navigate])
   useEffect(() => {
-    // Fetch existing settings
+    if(!token)return;
     axios.get(`http://localhost:5000/api/tables/${adminId}`).then(res => {
       if (res.data) setForm(res.data);
     });
-  }, [adminId]);
+  }, [adminId,token]);
 
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));

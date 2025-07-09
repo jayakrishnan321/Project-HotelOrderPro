@@ -5,6 +5,7 @@ import axios from 'axios';
 function AdminEditFood() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [token,settoken]=useState('')
   const [formData, setFormData] = useState({
     name: '',
     type: 'veg',
@@ -15,8 +16,15 @@ function AdminEditFood() {
   });
 
   const [prevImage, setPrevImage] = useState('');
-
+useEffect(()=>{
+  const token=sessionStorage.getItem('token')
+  settoken(token)
+  if (!token){
+    navigate('/admin/login')
+  }
+},[navigate])
   useEffect(() => {
+    if(!token)return;
     const fetchFood = async () => {
       try {
         const res = await axios.get(`http://localhost:5000/api/foods/${id}`);
@@ -35,7 +43,7 @@ function AdminEditFood() {
       }
     };
     fetchFood();
-  }, [id]);
+  }, [id,token]);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;

@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function AdminAllOrders() {
+  const navigate=useNavigate()
   const [orders, setOrders] = useState([]);
   const [searchTableNumber, setSearchTableNumber] = useState('');
   const [searchTableType, setSearchTableType] = useState('');
@@ -11,13 +13,28 @@ function AdminAllOrders() {
   const [searchPaymentStatus, setSearchPaymentStatus] = useState('');
   const [searchDate, setSearchDate] = useState('');
 
-  const token = sessionStorage.getItem("token");
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const adminemail = decoded.email;
+ 
+   const[adminemail,setAdminemail]=useState('')
+  useEffect(()=>{
+         const token = sessionStorage.getItem('token')
+         if(!token){
+          navigate('/admin/login')
+          return
+         }
+         try{
+          const decoded = JSON.parse(atob(token.split('.')[1]));
+          setAdminemail(decoded.email)
+  
+         }catch(err){
+          console.log(err)
+          navigate('/admin/login')
+  
+         }
+  },[navigate])
 
  
- 
   useEffect(()=>{
+    if(!adminemail)return;
      const fetchallorders = async () => {
     const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
     setOrders(res.data)

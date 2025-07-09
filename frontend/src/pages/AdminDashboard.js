@@ -1,11 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 function AdminDashboard() {
   const navigate = useNavigate()
-  const token = sessionStorage.getItem('token')
-  const decoded = JSON.parse(atob(token.split('.')[1]));
-  const name = decoded.name
-  const id = decoded.id
+  const[name,setName]=useState('')
+  const[id,setid]=useState('')
+  useEffect(()=>{
+      const token = sessionStorage.getItem('token')
+      if(!token){
+        navigate('/admin/login')
+        return
+      }
+      try{
+        const decoded = JSON.parse(atob(token.split('.')[1]));
+        setName(decoded.name)
+        setid(decoded.id)
+      }catch(err){
+        console.log(err)
+        navigate('/admin/login')
+      }
+  },[navigate])
+  
+  
+  
 
 
   return (

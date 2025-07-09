@@ -1,17 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 function TableConfigure() {
   const navigate = useNavigate()
   const [tables, setTables] = useState([]);
   const [visible, setVisible] = useState(false);
-
-  const handleViewConfig = async () => {
+  const [adminId,setadminId]=useState('')
+useEffect(()=>{
+  
     const token = sessionStorage.getItem("token");
+    if(!token){
+      navigate('/admin/login')
+    }try{
+     
     const decoded = JSON.parse(atob(token.split('.')[1]));
-    const adminId = decoded.id;
+    setadminId(decoded.id)
+    }catch(err){
+      console.log(err)
+      navigate('/admin/login')
+    }
 
-
+},[navigate])
+  const handleViewConfig = async () => {
+    
     try {
       const res = await axios.get(`http://localhost:5000/api/tables/${adminId}`);
       const { acTables = 0, nonAcTables = 0 } = res.data;

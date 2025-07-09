@@ -4,17 +4,30 @@ import { useNavigate } from 'react-router-dom';
 function AdminUserRequest() {
   const navigate = useNavigate()
   const [users, setUsers] = useState([]);
+ const [adminEmail,setAdminemail]=useState('')
 
+  useEffect(()=>{
+    
+      const token = sessionStorage.getItem("token");
+      if(!token){
+        navigate('/admin/login')
+      }try{
+       
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.email)
+      }catch(err){
+        console.log(err)
+        navigate('/admin/login')
+      }
+  
+  },[navigate])
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    const adminEmail = decoded.email;
-
+    if(!adminEmail)return;
     axios
       .get(`http://localhost:5000/api/users/pending/${adminEmail}`)
       .then((res) => setUsers(res.data))
       .catch((err) => console.error('Error fetching users', err));
-  }, []);
+  }, [adminEmail]);
 
   const handleStatusChange = async (userId, newStatus) => {
     try {

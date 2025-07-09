@@ -1,11 +1,26 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 function AdminSettings() {
-    const token = sessionStorage.getItem('token')
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    const id = decoded.id
-    const email = decoded.email
-    const navigate = useNavigate()
+    const navigate=useNavigate()
+    const [email,setemail]=useState('')
+    const [id,setid]=useState('')
+    useEffect(()=>{
+          const token = sessionStorage.getItem('token')
+          if (!token){
+            navigate('/admin/login')
+          }
+          try{
+              const decoded = JSON.parse(atob(token.split('.')[1]));
+              setemail(decoded.email)
+              setid(decoded.id)
+
+          }catch(err){
+            console.log(err)
+            navigate('/admin/login')
+          }
+    },[navigate])
+   
+  
     const handlechangepassword = (id) => {
         navigate(`/admin/changepassword/${id}`)
 
