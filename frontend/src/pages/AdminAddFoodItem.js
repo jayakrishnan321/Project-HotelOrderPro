@@ -4,26 +4,26 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 function AdminAddFoodItem() {
   const navigate = useNavigate()
-  const[adminemail,setAdminemail]=useState('')
-  const [id,setid]=useState('')
-useEffect(()=>{
-       const token = sessionStorage.getItem('token')
-       if(!token){
-        navigate('/admin/login')
-        return
-       }
-       try{
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        setAdminemail(decoded.email)
-        setid(decoded.id)
+  const [adminemail, setAdminemail] = useState('')
+  const [id, setid] = useState('')
+  useEffect(() => {
+    const token = sessionStorage.getItem('token')
+    if (!token) {
+      navigate('/admin/login')
+      return
+    }
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.email)
+      setid(decoded.id)
 
-       }catch(err){
-        console.log(err)
-        navigate('/admin/login')
+    } catch (err) {
+      console.log(err)
+      navigate('/admin/login')
 
-       }
-},[navigate])
-      
+    }
+  }, [navigate])
+
 
 
   const [formData, setFormData] = useState({

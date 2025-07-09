@@ -1,6 +1,6 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import AdminLogin from "./pages/AdminLogin";
 import AdminRegister from "./pages/AdminRegister";
-import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
 import AdminDashboard from './pages/AdminDashboard'
 import AdminAddFoodItem from "./pages/AdminAddFoodItem";
 import AdminViewFoodItem from "./pages/AdminViewFoodItem";
@@ -24,39 +24,39 @@ import AdminAllOrders from "./pages/AdminAllOrders";
 import AdminTableStatus from "./pages/AdminTableStatus";
 import AdminUserlist from "./pages/AdminUserlist";
 
-  function App() {
+function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/admin/register" element={<AdminRegister/>}/>
-        <Route path="/admin/login" element={<AdminLogin/>}/>
-        <Route path="/admin/home" element={<AdminDashboard/>}/>
-        <Route path="/admin/addfooditem" element={<AdminAddFoodItem/>}/>
-        <Route path="/admin/viewfooditem/:id" element={<AdminViewFoodItem/>}/>
-        <Route path="/admin/editfooditem/:id" element={<AdminEditFood/>}/>
-        <Route path="/admin/settings" element={<AdminSettings/>}/>
-        <Route path="/admin/changepassword/:id" element={<AdminChangePassword/>}/>
-        <Route path="/admin/tablesettings/:id" element={<AdminTableSettings/>}/>
-        <Route path="/admin/tableconfigure"  element={<AdminTableConfigure/>}/>
-        <Route path="/admin/adminuserrequest/:email" element={<AdminUserRequest/>}/>
-        <Route path="/admin/allorders" element={<AdminAllOrders/>}/>
-        <Route path="/admin/tables/:type/:number" element={<AdminTableStatus/>}/>
-        <Route path="/admin/userlist" element={<AdminUserlist/>}/>
-        <Route path="/users/register"  element={<UserRegister/>}/>
-        <Route path="/users/login" element={<UserLogin/>}/>
-        <Route path="/users/dashboard" element={<UserDashboard/>}/>
-        <Route path="/users/settings" element={<UserSettings/>}/>
-        <Route path="/users/viewfooditems" element={<UserViewFoodItem/>}/>
-        <Route path="/users/changepassword" element={<UserChangePassword/>}/>
-        <Route path="/users/takeorders" element={<UserTakeOrders/>}/>
-        <Route path="/users/tables/:type/:number" element={<UserDisplayOrders/>}/>
-        <Route path="/users/allorders" element={<UserAllOrders/>}/>
-        <Route path="/users/vieworders" element={<UserViewOrders/>}/>
-         </Routes>
+        <Route path="/admin/register" element={<AdminRegister />} />
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/home" element={<AdminDashboard />} />
+        <Route path="/admin/addfooditem" element={<AdminAddFoodItem />} />
+        <Route path="/admin/viewfooditem/:id" element={<AdminViewFoodItem />} />
+        <Route path="/admin/editfooditem/:id" element={<AdminEditFood />} />
+        <Route path="/admin/settings" element={<AdminSettings />} />
+        <Route path="/admin/changepassword/:id" element={<AdminChangePassword />} />
+        <Route path="/admin/tablesettings/:id" element={<AdminTableSettings />} />
+        <Route path="/admin/tableconfigure" element={<AdminTableConfigure />} />
+        <Route path="/admin/adminuserrequest/:email" element={<AdminUserRequest />} />
+        <Route path="/admin/allorders" element={<AdminAllOrders />} />
+        <Route path="/admin/tables/:type/:number" element={<AdminTableStatus />} />
+        <Route path="/admin/userlist" element={<AdminUserlist />} />
+        <Route path="/users/register" element={<UserRegister />} />
+        <Route path="/users/login" element={<UserLogin />} />
+        <Route path="/users/dashboard" element={<UserDashboard />} />
+        <Route path="/users/settings" element={<UserSettings />} />
+        <Route path="/users/viewfooditems" element={<UserViewFoodItem />} />
+        <Route path="/users/changepassword" element={<UserChangePassword />} />
+        <Route path="/users/takeorders" element={<UserTakeOrders />} />
+        <Route path="/users/tables/:type/:number" element={<UserDisplayOrders />} />
+        <Route path="/users/allorders" element={<UserAllOrders />} />
+        <Route path="/users/vieworders" element={<UserViewOrders />} />
+      </Routes>
     </Router>
-    
+
   );
 }
 export default App;
 
- 
+

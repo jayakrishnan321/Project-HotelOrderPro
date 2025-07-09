@@ -7,23 +7,23 @@ function AdminViewFoodItem() {
   const [searchName, setSearchName] = useState('');
   const [searchType, setSearchType] = useState('');
   const [searchPrice, setSearchPrice] = useState('');
-  
+
   const navigate = useNavigate()
-  const [id,setId]=useState('')
-   useEffect(()=>{
-  const token = sessionStorage.getItem('token')
-  if(!token){
-     navigate('/admin/login')
-  }
-  try{
-     const decoded = JSON.parse(atob(token.split('.')[1]));
-  setId(decoded.id)
-  }catch(err){
-    console.log(err)
-    navigate('/admin/login')
-  }
-   },[navigate])
- 
+  const [id, setId] = useState('')
+  useEffect(() => {
+    const token = sessionStorage.getItem('token')
+    if (!token) {
+      navigate('/admin/login')
+    }
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setId(decoded.id)
+    } catch (err) {
+      console.log(err)
+      navigate('/admin/login')
+    }
+  }, [navigate])
+
 
   // Fetch all food items
   const fetchFoods = useCallback(async () => {
@@ -37,9 +37,9 @@ function AdminViewFoodItem() {
   }, [id]);
 
   useEffect(() => {
-    if(!id)return;
+    if (!id) return;
     fetchFoods();
-  }, [fetchFoods,id]);
+  }, [fetchFoods, id]);
 
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
@@ -86,6 +86,12 @@ function AdminViewFoodItem() {
           onChange={(e) => setSearchPrice(e.target.value)}
           className="border px-3 py-1 rounded"
         />
+        <button
+          onClick={() => navigate('/admin/home')}
+          className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+        >
+          Go to Home
+        </button>
       </div>
 
       <table className="min-w-full table-auto border border-collapse border-gray-300">

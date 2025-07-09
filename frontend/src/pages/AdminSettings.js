@@ -1,26 +1,26 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 function AdminSettings() {
-    const navigate=useNavigate()
-    const [email,setemail]=useState('')
-    const [id,setid]=useState('')
-    useEffect(()=>{
-          const token = sessionStorage.getItem('token')
-          if (!token){
+    const navigate = useNavigate()
+    const [email, setemail] = useState('')
+    const [id, setid] = useState('')
+    useEffect(() => {
+        const token = sessionStorage.getItem('token')
+        if (!token) {
             navigate('/admin/login')
-          }
-          try{
-              const decoded = JSON.parse(atob(token.split('.')[1]));
-              setemail(decoded.email)
-              setid(decoded.id)
+        }
+        try {
+            const decoded = JSON.parse(atob(token.split('.')[1]));
+            setemail(decoded.email)
+            setid(decoded.id)
 
-          }catch(err){
+        } catch (err) {
             console.log(err)
             navigate('/admin/login')
-          }
-    },[navigate])
-   
-  
+        }
+    }, [navigate])
+
+
     const handlechangepassword = (id) => {
         navigate(`/admin/changepassword/${id}`)
 
@@ -55,6 +55,12 @@ function AdminSettings() {
                 className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
                 <p className="text-lg font-semibold text-blue-700">Logout</p>
             </div>
+            <button
+                onClick={() => navigate('/admin/home')}
+                className="ml-4 mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+            >
+                Go to Home
+            </button>
 
 
         </div>

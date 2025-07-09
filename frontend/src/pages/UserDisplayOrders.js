@@ -13,22 +13,22 @@ function UserDisplayOrders() {
   const [orderId, setOrderId] = useState(null);
   const [adminemail, setAdminemail] = useState('');
   const priceKey = type === 'AC' ? 'foodacprice' : 'foodnonacprice';
-useEffect(() => {
-  const token = sessionStorage.getItem('token');
-  if (!token) {
-    navigate('/users/login');
-    return;
-  }
+  useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      navigate('/users/login');
+      return;
+    }
 
-  try {
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    setAdminemail(decoded.adminemail);
-  } catch (err) {
-    console.error('Invalid token:', err);
-    navigate('/users/login');
-    return;
-  }
-}, [navigate]);
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.adminemail);
+    } catch (err) {
+      console.error('Invalid token:', err);
+      navigate('/users/login');
+      return;
+    }
+  }, [navigate]);
   useEffect(() => {
     if (!adminemail) return;
     const fetchFoods = async () => {
@@ -37,7 +37,7 @@ useEffect(() => {
     };
 
     const fetchUncompletedOrder = async () => {
-      
+
       try {
         const res = await axios.get(`http://localhost:5000/api/orders/uncompleted/${number}/${type}/${adminemail}`);
         const existingOrder = res.data;
@@ -174,6 +174,12 @@ useEffect(() => {
           {editIndex !== null ? "Update" : "Add"}
         </button>
       </div>
+      <button
+        onClick={() => navigate('/users/takeorders')}
+        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
 
       {/* Items Table */}
       <table className="w-full mt-6 border border-gray-300 text-center">

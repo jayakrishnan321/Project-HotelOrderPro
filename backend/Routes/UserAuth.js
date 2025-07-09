@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const User=require('../models/User')
+const User = require('../models/User')
 
 const otpStore = {};
 
@@ -18,21 +18,21 @@ const transporter = nodemailer.createTransport({
 });
 router.post('/send-otp', async (req, res) => {
   const { name, useremail, adminemail, password } = req.body;
-console.log(req.body)
-  
+  console.log(req.body)
+
 
   if (!name || !useremail || !adminemail || !password) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   const existingUser = await User.findOne({ useremail });
-  
+
   if (existingUser) {
     return res.status(400).json({ message: 'User already exists' });
   }
 
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
-console.log(otp)
+  console.log(otp)
   otpStore[useremail] = {
     otp,
     password,
@@ -141,7 +141,7 @@ router.post('/login', async (req, res) => {
 
     // Generate token
     const token = jwt.sign(
-      { id: user._id, email: user.useremail,name:user.name, role: 'user' ,adminemail:user.adminemail},
+      { id: user._id, email: user.useremail, name: user.name, role: 'user', adminemail: user.adminemail },
       process.env.JWT_SECRET,
       { expiresIn: '1d' }
     );
@@ -152,22 +152,23 @@ router.post('/login', async (req, res) => {
     res.status(500).json({ message: 'Server error during login' });
   }
 });
-router.put('/change-password/:id',async (req,res)=>{
-  try {  const id=req.params.id
-        const user = await User.findById(id);
-        const { oldPassword, newPassword } = req.body;
+router.put('/change-password/:id', async (req, res) => {
+  try {
+    const id = req.params.id
+    const user = await User.findById(id);
+    const { oldPassword, newPassword } = req.body;
 
-        const isMatch = await bcrypt.compare(oldPassword, user.password);
-        if (!isMatch) return res.status(400).json({ msg: "Old password is incorrect" });
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) return res.status(400).json({ msg: "Old password is incorrect" });
 
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(newPassword, salt);
-        await user.save();
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
 
-      res.json({ msg: "Password updated successfully" });
-    } catch (err) {
-        res.status(500).json({ msg: "Error updating password" });
-    }
+    res.json({ msg: "Password updated successfully" });
+  } catch (err) {
+    res.status(500).json({ msg: "Error updating password" });
+  }
 })
 
 module.exports = router;

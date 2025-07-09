@@ -5,24 +5,24 @@ function TableConfigure() {
   const navigate = useNavigate()
   const [tables, setTables] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [adminId,setadminId]=useState('')
-useEffect(()=>{
-  
+  const [adminId, setadminId] = useState('')
+  useEffect(() => {
+
     const token = sessionStorage.getItem("token");
-    if(!token){
+    if (!token) {
       navigate('/admin/login')
-    }try{
-     
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    setadminId(decoded.id)
-    }catch(err){
+    } try {
+
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setadminId(decoded.id)
+    } catch (err) {
       console.log(err)
       navigate('/admin/login')
     }
 
-},[navigate])
+  }, [navigate])
   const handleViewConfig = async () => {
-    
+
     try {
       const res = await axios.get(`http://localhost:5000/api/tables/${adminId}`);
       const { acTables = 0, nonAcTables = 0 } = res.data;
@@ -46,7 +46,12 @@ useEffect(()=>{
       >
         View Table Configuration
       </button>
-
+      <button
+        onClick={() => navigate('/admin/home')}
+        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
       {visible && (
         <div className="space-y-8">
           {/* Non-AC Tables Section */}

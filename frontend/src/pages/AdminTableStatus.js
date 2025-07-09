@@ -7,28 +7,28 @@ function AdminTableStatus() {
   const { type, number } = useParams();
   const [order, setOrder] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState('');
-    const [token,settoken]=useState('')
-    const [adminemail,setAdminemail]=useState('')
-useEffect(()=>{
-  
+  const [token, settoken] = useState('')
+  const [adminemail, setAdminemail] = useState('')
+  useEffect(() => {
+
     const token = sessionStorage.getItem("token");
     settoken(token)
-    if(!token){
+    if (!token) {
       navigate('/admin/login')
-    }try{
-     
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    setAdminemail(decoded.email)
-    }catch(err){
+    } try {
+
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.email)
+    } catch (err) {
       console.log(err)
       navigate('/admin/login')
     }
 
-},[navigate])
+  }, [navigate])
   useEffect(() => {
-    if(!token)return;
+    if (!token) return;
     const fetchOrder = async () => {
-     
+
 
       try {
         const res = await axios.get(`http://localhost:5000/api/orders/table-status/${adminemail}/${type}/${number}`);
@@ -40,7 +40,7 @@ useEffect(()=>{
     };
 
     fetchOrder();
-  }, [type, number,adminemail,token]);
+  }, [type, number, adminemail, token]);
 
   const handleStatusChange = (e) => {
     setSelectedStatus(e.target.value);

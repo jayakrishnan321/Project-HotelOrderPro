@@ -3,41 +3,47 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
 function AdminUserlist() {
-    const navigate=useNavigate()
-     const [adminemail,setadminemail]=useState('')
-     const [users,setusers]=useState([])
-    useEffect(()=>{
-        const token=sessionStorage.getItem('token')
-       
-        if (!token){
-           return  navigate('/admin/login')
-        }try{
-            const decoded = JSON.parse(atob(token.split('.')[1]));
-            
-             setadminemail(decoded.email)
-        }catch(err){
-               console.log(err)
-               navigate('/admin/login')
-        }
-           
-    },[navigate])
-    useEffect(()=>{
-        if(!adminemail)return;
-       const fetchusers = async () => {
-  try {
-    const res = await axios.get(`http://localhost:5000/api/admin/userlist/${adminemail}`);
-    setusers(res.data);
-  } catch (err) {
-    console.error("Failed to fetch users", err);
-  }
-};
+  const navigate = useNavigate()
+  const [adminemail, setadminemail] = useState('')
+  const [users, setusers] = useState([])
+  useEffect(() => {
+    const token = sessionStorage.getItem('token')
 
-        fetchusers()
-    },[adminemail])
+    if (!token) {
+      return navigate('/admin/login')
+    } try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+
+      setadminemail(decoded.email)
+    } catch (err) {
+      console.log(err)
+      navigate('/admin/login')
+    }
+
+  }, [navigate])
+  useEffect(() => {
+    if (!adminemail) return;
+    const fetchusers = async () => {
+      try {
+        const res = await axios.get(`http://localhost:5000/api/admin/userlist/${adminemail}`);
+        setusers(res.data);
+      } catch (err) {
+        console.error("Failed to fetch users", err);
+      }
+    };
+
+    fetchusers()
+  }, [adminemail])
   return (
-     <div className="p-4">
+    <div className="p-4">
       <h2 className="text-2xl font-bold text-center mb-4">User List</h2>
-      <div className="overflow-x-auto">
+      <button
+        onClick={() => navigate('/admin/home')}
+        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
+      <div className="mt-3 overflow-x-auto">
         <table className="min-w-full table-fixed border border-gray-300">
           <thead className="bg-gray-100">
             <tr>

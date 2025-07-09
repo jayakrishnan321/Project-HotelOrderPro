@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function AdminAllOrders() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [orders, setOrders] = useState([]);
   const [searchTableNumber, setSearchTableNumber] = useState('');
   const [searchTableType, setSearchTableType] = useState('');
@@ -13,32 +13,32 @@ function AdminAllOrders() {
   const [searchPaymentStatus, setSearchPaymentStatus] = useState('');
   const [searchDate, setSearchDate] = useState('');
 
- 
-   const[adminemail,setAdminemail]=useState('')
-  useEffect(()=>{
-         const token = sessionStorage.getItem('token')
-         if(!token){
-          navigate('/admin/login')
-          return
-         }
-         try{
-          const decoded = JSON.parse(atob(token.split('.')[1]));
-          setAdminemail(decoded.email)
-  
-         }catch(err){
-          console.log(err)
-          navigate('/admin/login')
-  
-         }
-  },[navigate])
 
- 
-  useEffect(()=>{
-    if(!adminemail)return;
-     const fetchallorders = async () => {
-    const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
-    setOrders(res.data)
-  }
+  const [adminemail, setAdminemail] = useState('')
+  useEffect(() => {
+    const token = sessionStorage.getItem('token')
+    if (!token) {
+      navigate('/admin/login')
+      return
+    }
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.email)
+
+    } catch (err) {
+      console.log(err)
+      navigate('/admin/login')
+
+    }
+  }, [navigate])
+
+
+  useEffect(() => {
+    if (!adminemail) return;
+    const fetchallorders = async () => {
+      const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
+      setOrders(res.data)
+    }
     fetchallorders()
   })
   const filteredOrders = orders.filter(order => {
@@ -57,8 +57,13 @@ function AdminAllOrders() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4 text-center">All Orders</h1>
-
-      <div className="overflow-x-auto">
+      <button
+        onClick={() => navigate('/admin/home')}
+        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
+      <div className="mt-2 overflow-x-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-4">
           <input
             type="text"

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 function UserSettings() {
   const navigate = useNavigate()
-  useEffect(()=>{
-    const token =sessionStorage.getItem('token')
-    if(!token){
+  useEffect(() => {
+    const token = sessionStorage.getItem('token')
+    if (!token) {
       navigate('/users/login')
     }
   })
@@ -22,6 +22,13 @@ function UserSettings() {
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">Logout</p>
       </div>
+      <button
+        onClick={() => navigate('/users/dashboard')}
+        className="mt-3 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
+
     </div>
   )
 }

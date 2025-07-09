@@ -6,26 +6,26 @@ function UserTakeOrders() {
   const navigate = useNavigate()
   const [tables, setTables] = useState([]);
   const [visible, setVisible] = useState(false);
-  const [adminemail,setAdminemail]=useState('')
+  const [adminemail, setAdminemail] = useState('')
 
   useEffect(() => {
-  const token = sessionStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
-  if (!token) {
-    navigate("/users/login");
-    return;
-  }
+    if (!token) {
+      navigate("/users/login");
+      return;
+    }
 
-  try {
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    setAdminemail(decoded.adminemail);
-  } catch (err) {
-    console.error("Invalid token:", err);
-    navigate("/users/login");
-  }
-}, [navigate]);
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.adminemail);
+    } catch (err) {
+      console.error("Invalid token:", err);
+      navigate("/users/login");
+    }
+  }, [navigate]);
   const handleViewConfig = async () => {
-    
+
 
     try {
       const res = await axios.get(`http://localhost:5000/api/tables/users/${adminemail}`);
@@ -50,6 +50,13 @@ function UserTakeOrders() {
       >
         View Table Configuration
       </button>
+      <button
+        onClick={() => navigate('/users/dashboard')}
+        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
+
 
       {visible && (
         <div className="space-y-8">

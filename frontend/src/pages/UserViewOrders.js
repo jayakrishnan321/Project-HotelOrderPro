@@ -3,28 +3,28 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 function UserViewOrders() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [orders, setOrders] = useState([]);
-  const [adminemail,setAdminemail]=useState('')
-useEffect(()=>{
-         const token = sessionStorage.getItem("token");
-         if(!token){
-          navigate('/users/login')
-         }
-         try{
-         const decoded = JSON.parse(atob(token.split('.')[1]));
-        setAdminemail(decoded.adminemail)
-         }catch(err){
-          console.log(err)
-          navigate('/users/login')
-         }
-        
-},[navigate])
+  const [adminemail, setAdminemail] = useState('')
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate('/users/login')
+    }
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setAdminemail(decoded.adminemail)
+    } catch (err) {
+      console.log(err)
+      navigate('/users/login')
+    }
+
+  }, [navigate])
   useEffect(() => {
     const fetchPending = async () => {
-      if(!adminemail) return;
+      if (!adminemail) return;
       try {
-      
+
 
         const res = await axios.get(`http://localhost:5000/api/orders/vieworders/${adminemail}`);
 
@@ -43,30 +43,36 @@ useEffect(()=>{
     fetchPending();
   }, [adminemail]);
   const handlePendingClick = async (orderId, itemId) => {
-  try {
-    await axios.put(`http://localhost:5000/api/orders/update-status/${orderId}/${itemId}`);
+    try {
+      await axios.put(`http://localhost:5000/api/orders/update-status/${orderId}/${itemId}`);
 
-    // After successful update, refresh the list
-    setOrders((prevOrders) =>
-      prevOrders
-        .map((order) => {
-          if (order._id === orderId) {
-            const updatedItems = order.items.filter((item) => item._id !== itemId);
-            return { ...order, items: updatedItems };
-          }
-          return order;
-        })
-        .filter((order) => order.items.length > 0)
-    );
-  } catch (err) {
-    console.error("Failed to update status:", err);
-  }
-};
+      // After successful update, refresh the list
+      setOrders((prevOrders) =>
+        prevOrders
+          .map((order) => {
+            if (order._id === orderId) {
+              const updatedItems = order.items.filter((item) => item._id !== itemId);
+              return { ...order, items: updatedItems };
+            }
+            return order;
+          })
+          .filter((order) => order.items.length > 0)
+      );
+    } catch (err) {
+      console.error("Failed to update status:", err);
+    }
+  };
 
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold text-center mb-6">Pending Food Orders</h1>
+      <button
+        onClick={() => navigate('/users/dashboard')}
+        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
 
       {orders.length === 0 ? (
         <p className="text-center text-gray-500">No pending items found.</p>

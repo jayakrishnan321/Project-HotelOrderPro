@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 function UserAllOrders() {
-  const navigate=useNavigate()
+  const navigate = useNavigate()
   const [orders, setOrders] = useState([]);
   const [searchTableNumber, setSearchTableNumber] = useState('');
   const [searchTableType, setSearchTableType] = useState('');
@@ -10,7 +10,7 @@ function UserAllOrders() {
   const [searchStatus, setSearchStatus] = useState('');
   const [searchPaymentStatus, setSearchPaymentStatus] = useState('');
   const [searchDate, setSearchDate] = useState('');
-   useEffect(() => {
+  useEffect(() => {
     const fetchAllOrders = async () => {
       const token = sessionStorage.getItem("token");
 
@@ -127,6 +127,13 @@ function UserAllOrders() {
           </tbody>
         </table>
       </div>
+      <button
+        onClick={() => navigate('/users/dashboard')}
+        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to Home
+      </button>
+
     </div>
   );
 }

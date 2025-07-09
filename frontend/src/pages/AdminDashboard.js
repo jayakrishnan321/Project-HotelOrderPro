@@ -2,26 +2,26 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 function AdminDashboard() {
   const navigate = useNavigate()
-  const[name,setName]=useState('')
-  const[id,setid]=useState('')
-  useEffect(()=>{
-      const token = sessionStorage.getItem('token')
-      if(!token){
-        navigate('/admin/login')
-        return
-      }
-      try{
-        const decoded = JSON.parse(atob(token.split('.')[1]));
-        setName(decoded.name)
-        setid(decoded.id)
-      }catch(err){
-        console.log(err)
-        navigate('/admin/login')
-      }
-  },[navigate])
-  
-  
-  
+  const [name, setName] = useState('')
+  const [id, setid] = useState('')
+  useEffect(() => {
+    const token = sessionStorage.getItem('token')
+    if (!token) {
+      navigate('/admin/login')
+      return
+    }
+    try {
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setName(decoded.name)
+      setid(decoded.id)
+    } catch (err) {
+      console.log(err)
+      navigate('/admin/login')
+    }
+  }, [navigate])
+
+
+
 
 
   return (
@@ -44,7 +44,7 @@ function AdminDashboard() {
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">view Table Configuration</p>
       </div>
-       <div onClick={() => { navigate(`/admin/userlist`) }}
+      <div onClick={() => { navigate(`/admin/userlist`) }}
         className="mt-5 bg-blue-100 cursor-pointer border border-blue-300 rounded-lg p-4">
         <p className="text-lg font-semibold text-blue-700">User list</p>
       </div>

@@ -4,25 +4,25 @@ import { useNavigate } from 'react-router-dom';
 function AdminUserRequest() {
   const navigate = useNavigate()
   const [users, setUsers] = useState([]);
- const [adminEmail,setAdminemail]=useState('')
+  const [adminEmail, setAdminemail] = useState('')
 
-  useEffect(()=>{
-    
-      const token = sessionStorage.getItem("token");
-      if(!token){
-        navigate('/admin/login')
-      }try{
-       
+  useEffect(() => {
+
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      navigate('/admin/login')
+    } try {
+
       const decoded = JSON.parse(atob(token.split('.')[1]));
       setAdminemail(decoded.email)
-      }catch(err){
-        console.log(err)
-        navigate('/admin/login')
-      }
-  
-  },[navigate])
+    } catch (err) {
+      console.log(err)
+      navigate('/admin/login')
+    }
+
+  }, [navigate])
   useEffect(() => {
-    if(!adminEmail)return;
+    if (!adminEmail) return;
     axios
       .get(`http://localhost:5000/api/users/pending/${adminEmail}`)
       .then((res) => setUsers(res.data))
@@ -49,9 +49,15 @@ function AdminUserRequest() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">User Requests</h2>
-
+      <button
+        onClick={() => navigate('/admin/settings')}
+        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to back
+      </button>
       {users.length === 0 ? (
         <p className="text-center text-gray-500">No pending requests.</p>
+
       ) : (
         <div className="overflow-x-auto">
           <table className="min-w-full bg-white border border-gray-300">
@@ -96,6 +102,7 @@ function AdminUserRequest() {
               ))}
             </tbody>
           </table>
+
         </div>
       )}
     </div>

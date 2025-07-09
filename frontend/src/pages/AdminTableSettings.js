@@ -5,32 +5,32 @@ import { useNavigate } from 'react-router-dom';
 function AdminTableSettings() {
   const navigate = useNavigate()
   const [form, setForm] = useState({ acTables: '', nonAcTables: '' });
-  const [token,settoken]=useState('')
-  const [adminemail,setAdminemail]=useState('')
-const [adminId,setadminId]=useState('')
-useEffect(()=>{
-  
+  const [token, settoken] = useState('')
+  const [adminemail, setAdminemail] = useState('')
+  const [adminId, setadminId] = useState('')
+  useEffect(() => {
+
     const token = sessionStorage.getItem("token");
     settoken(token)
-    if(!token){
+    if (!token) {
       navigate('/admin/login')
-    }try{
-     
-    const decoded = JSON.parse(atob(token.split('.')[1]));
-    setadminId(decoded.id)
-    setAdminemail(decoded.email)
-    }catch(err){
+    } try {
+
+      const decoded = JSON.parse(atob(token.split('.')[1]));
+      setadminId(decoded.id)
+      setAdminemail(decoded.email)
+    } catch (err) {
       console.log(err)
       navigate('/admin/login')
     }
 
-},[navigate])
+  }, [navigate])
   useEffect(() => {
-    if(!token)return;
+    if (!token) return;
     axios.get(`http://localhost:5000/api/tables/${adminId}`).then(res => {
       if (res.data) setForm(res.data);
     });
-  }, [adminId,token]);
+  }, [adminId, token]);
 
   const handleChange = (e) => {
     setForm(prev => ({ ...prev, [e.target.name]: e.target.value }));
@@ -54,33 +54,42 @@ useEffect(()=>{
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-4 max-w-md bg-white rounded shadow">
-      <h2 className="text-xl font-bold mb-4">Table Settings</h2>
+    <div>
+      <form onSubmit={handleSubmit} className="p-4 max-w-md bg-white rounded shadow">
+        <h2 className="text-xl font-bold mb-4">Table Settings</h2>
 
-      <label className="block mb-2">AC Tables</label>
-      <input
-        type="number"
-        name="acTables"
-        value={form.acTables}
-        onChange={handleChange}
-        className="w-full border border-gray-400 p-2 rounded mb-4"
-        required
-      />
+        <label className="block mb-2">AC Tables</label>
+        <input
+          type="number"
+          name="acTables"
+          value={form.acTables}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded mb-4"
+          required
+        />
 
-      <label className="block mb-2">Non-AC Tables</label>
-      <input
-        type="number"
-        name="nonAcTables"
-        value={form.nonAcTables}
-        onChange={handleChange}
-        className="w-full border border-gray-400 p-2 rounded mb-4"
-        required
-      />
+        <label className="block mb-2">Non-AC Tables</label>
+        <input
+          type="number"
+          name="nonAcTables"
+          value={form.nonAcTables}
+          onChange={handleChange}
+          className="w-full border border-gray-400 p-2 rounded mb-4"
+          required
+        />
 
-      <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-        Save
+        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
+          Save
+        </button>
+
+      </form>
+      <button
+        onClick={() => navigate('/admin/settings')}
+        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
+      >
+        Go to back
       </button>
-    </form>
+    </div>
   );
 }
 
