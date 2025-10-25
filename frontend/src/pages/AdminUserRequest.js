@@ -48,42 +48,38 @@ function AdminUserRequest() {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4 text-center text-blue-700">User Requests</h2>
-      <button
-        onClick={() => navigate('/admin/settings')}
-        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
-      >
-        Go to back
-      </button>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold text-blue-700">User Requests</h2>
+        <button onClick={() => navigate('/admin/settings')} className="btn-secondary">Go back</button>
+      </div>
+
       {users.length === 0 ? (
         <p className="text-center text-gray-500">No pending requests.</p>
-
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full bg-white border border-gray-300">
-            <thead className="bg-gray-200">
+        <div className="table-modern overflow-x-auto">
+          <table className="min-w-full">
+            <thead className="table-header">
               <tr>
-                <th className="border p-2">Name</th>
-                <th className="border p-2">Email</th>
-                <th className="border p-2">Status</th>
-                <th className="border p-2">Action</th>
+                <th className="p-2">Name</th>
+                <th className="p-2">Email</th>
+                <th className="p-2">Status</th>
+                <th className="p-2">Action</th>
               </tr>
             </thead>
             <tbody>
               {users.map((user) => (
-                <tr key={user._id} className="text-center">
-                  <td className="border p-2">{user.name}</td>
-                  <td className="border p-2">{user.useremail}</td>
-                  <td className="border p-2 capitalize text-blue-600">{user.status}</td>
-                  <td className="border p-2 space-x-2">
+                <tr key={user._id} className="table-row text-center">
+                  <td className="p-2">{user.name}</td>
+                  <td className="p-2">{user.useremail}</td>
+                  <td className="p-2 capitalize text-blue-600">{user.status}</td>
+                  <td className="p-2 space-x-2">
                     <button
                       onClick={() => {
                         if (window.confirm('do you want to approve this user')) {
                           handleStatusChange(user._id, 'approved')
                         }
-                      }
-                      }
-                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                      }}
+                      className="btn-success"
                     >
                       Approve
                     </button>
@@ -93,7 +89,7 @@ function AdminUserRequest() {
                           handleStatusChange(user._id, 'rejected')
                         }
                       }}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                      className="btn-danger"
                     >
                       Reject
                     </button>
@@ -102,7 +98,6 @@ function AdminUserRequest() {
               ))}
             </tbody>
           </table>
-
         </div>
       )}
     </div>

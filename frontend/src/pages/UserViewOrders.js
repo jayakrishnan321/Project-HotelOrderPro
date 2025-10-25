@@ -66,47 +66,40 @@ function UserViewOrders() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold text-center mb-6">Pending Food Orders</h1>
-      <button
-        onClick={() => navigate('/users/dashboard')}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
-      >
-        Go to Home
-      </button>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">Pending Food Orders</h1>
+        <button onClick={() => navigate('/users/dashboard')} className="btn-secondary">Go to Home</button>
+      </div>
 
       {orders.length === 0 ? (
         <p className="text-center text-gray-500">No pending items found.</p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="min-w-full border border-gray-300 rounded-lg shadow-md">
-            <thead className="bg-gray-100">
+        <div className="table-modern overflow-x-auto">
+          <table className="min-w-full">
+            <thead className="table-header">
               <tr>
-                <th className="p-3 border">Table No.</th>
-                <th className="p-3 border">Type</th>
-                <th className="p-3 border">Food</th>
-                <th className="p-3 border">Qty</th>
-                <th className="p-3 border">Price</th>
-                <th className="p-3 border">Total</th>
-                <th className="p-3 border">Status</th>
+                <th className="p-3">Table No.</th>
+                <th className="p-3">Type</th>
+                <th className="p-3">Food</th>
+                <th className="p-3">Qty</th>
+                <th className="p-3">Price</th>
+                <th className="p-3">Total</th>
+                <th className="p-3">Status</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((order) =>
                 order.items.map((item, index) => (
-                  <tr key={order._id + index} className="text-center hover:bg-gray-50">
-                    <td className="p-2 border">{order.tableNumber}</td>
-                    <td className="p-2 border">{order.tableType}</td>
-                    <td className="p-2 border capitalize">{item.foodname}</td>
-                    <td className="p-2 border">{item.foodquantity}</td>
-                    <td className="p-2 border">₹{item.foodprice}</td>
-                    <td className="p-2 border">₹{item.total}</td>
-                    <td
-                      onClick={() => handlePendingClick(order._id, item._id)}
-                      className="p-2 border text-yellow-600 font-semibold cursor-pointer hover:text-green-600"
-                    >
+                  <tr key={order._id + index} className="table-row text-center">
+                    <td className="p-2">{order.tableNumber}</td>
+                    <td className="p-2">{order.tableType}</td>
+                    <td className="p-2 capitalize">{item.foodname}</td>
+                    <td className="p-2">{item.foodquantity}</td>
+                    <td className="p-2">₹{item.foodprice}</td>
+                    <td className="p-2">₹{item.total}</td>
+                    <td onClick={() => handlePendingClick(order._id, item._id)} className="p-2 cursor-pointer text-yellow-600 font-semibold hover:text-green-600">
                       {item.status}
                     </td>
-
                   </tr>
                 ))
               )}

@@ -54,8 +54,8 @@ function AdminTableSettings() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit} className="p-4 max-w-md bg-white rounded shadow">
+    <div className="max-w-md mx-auto mt-6">
+      <div className="glass-card-solid p-6 rounded shadow">
         <h2 className="text-xl font-bold mb-4">Table Settings</h2>
 
         <label className="block mb-2">AC Tables</label>
@@ -64,7 +64,7 @@ function AdminTableSettings() {
           name="acTables"
           value={form.acTables}
           onChange={handleChange}
-          className="w-full border border-gray-400 p-2 rounded mb-4"
+          className="input-field mb-4"
           required
         />
 
@@ -74,21 +74,19 @@ function AdminTableSettings() {
           name="nonAcTables"
           value={form.nonAcTables}
           onChange={handleChange}
-          className="w-full border border-gray-400 p-2 rounded mb-4"
+          className="input-field mb-4"
           required
         />
 
-        <button type="submit" className="bg-blue-600 text-white px-4 py-2 rounded">
-          Save
-        </button>
-
-      </form>
-      <button
-        onClick={() => navigate('/admin/settings')}
-        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
-      >
-        Go to back
-      </button>
+        <div className="flex gap-3">
+          <button type="submit" form="" onClick={(e)=>{e.preventDefault(); handleSubmit(e);}} className="btn-primary">
+            Save
+          </button>
+          <button onClick={() => navigate('/admin/settings')} className="btn-secondary">
+            Go back
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

@@ -50,50 +50,55 @@ function AdminChangePassword() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <form
-        onSubmit={(e) => {
-          e.preventDefault(); // prevent page reload
-          handleSubmit(id);
-        }}
-        className="bg-white p-6 rounded shadow-md w-full max-w-sm"
-      >
-        <h2 className="text-xl font-bold mb-4 text-center">Change Password</h2>
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
+      <div className="glass-card-solid w-full max-w-md p-8">
+        <div className="mb-6 text-center">
+          <h2 className="text-2xl font-extrabold">Change Password</h2>
+          <p className="text-sm text-gray-600 mt-1">Update your admin account password securely.</p>
+        </div>
 
-        <input
-          type="password"
-          placeholder="Old Password"
-          value={oldPassword}
-          onChange={(e) => setOldPassword(e.target.value)}
-          className="w-full p-2 mb-4 border rounded"
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="New Password"
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className="w-full p-2 mb-4 border rounded"
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="Confirm New Password"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full p-2 mb-4 border rounded"
-          required
-        />
-
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        <form
+          onSubmit={(e) => {
+            e.preventDefault(); // prevent page reload
+            handleSubmit(id);
+          }}
+          className="space-y-4"
         >
-          Update Password
-        </button>
-      </form>
+          <input
+            type="password"
+            placeholder="Old Password"
+            value={oldPassword}
+            onChange={(e) => setOldPassword(e.target.value)}
+            className="input-field"
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="New Password"
+            value={newPassword}
+            onChange={(e) => setNewPassword(e.target.value)}
+            className="input-field"
+            required
+          />
+
+          <input
+            type="password"
+            placeholder="Confirm New Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            className="input-field"
+            required
+          />
+
+          <button
+            type="submit"
+            className="btn-primary w-full"
+          >
+            Update Password
+          </button>
+        </form>
+      </div>
     </div>
   )
 }

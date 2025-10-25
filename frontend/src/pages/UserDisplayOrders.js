@@ -146,92 +146,70 @@ function UserDisplayOrders() {
 
 
   return (
-    <div className="max-w-4xl mx-auto mt-8 p-4 bg-white shadow rounded">
-      <h1 className="text-xl font-bold mb-4">Table {number} ({type})</h1>
+    <div className="max-w-4xl mx-auto mt-8">
+      <div className="glass-card-solid p-4 rounded shadow">
+        <div className="flex items-center justify-between mb-4">
+          <h1 className="text-xl font-bold">Table {number} ({type})</h1>
+          <button onClick={() => navigate('/users/takeorders')} className="btn-secondary">Go to Home</button>
+        </div>
 
-      {/* Form */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-6">
-        <select
-          value={form.food}
-          onChange={(e) => setForm({ ...form, food: e.target.value })}
-          className="border p-2 rounded w-full"
-        >
-          <option value="">Select Food</option>
-          {foods.map((f, i) => (
-            <option key={i} value={f.foodname}>
-              {f.foodname} - ₹{f[priceKey]}
-            </option>
-          ))}
-        </select>
-        <input
-          type="number"
-          value={form.quantity}
-          min={1}
-          onChange={(e) => setForm({ ...form, quantity: e.target.value })}
-          className="border p-2 rounded w-full"
-        />
-        <button onClick={handleAdd} className="bg-blue-600 text-white px-4 py-2 rounded">
-          {editIndex !== null ? "Update" : "Add"}
-        </button>
-      </div>
-      <button
-        onClick={() => navigate('/users/takeorders')}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
-      >
-        Go to Home
-      </button>
+        {/* Form */}
+        <div className="flex flex-col sm:flex-row gap-4 mb-6">
+          <select value={form.food} onChange={(e) => setForm({ ...form, food: e.target.value })} className="input-field w-full">
+            <option value="">Select Food</option>
+            {foods.map((f, i) => (
+              <option key={i} value={f.foodname}>{f.foodname} - ₹{f[priceKey]}</option>
+            ))}
+          </select>
+          <input type="number" value={form.quantity} min={1} onChange={(e) => setForm({ ...form, quantity: e.target.value })} className="input-field w-full" />
+          <button onClick={handleAdd} className="btn-primary">
+            {editIndex !== null ? "Update" : "Add"}
+          </button>
+        </div>
 
-      {/* Items Table */}
-      <table className="w-full mt-6 border border-gray-300 text-center">
-        <thead className="bg-gray-200">
-          <tr>
-            <th className="p-2 border">Food</th>
-            <th className="p-2 border">Qty</th>
-            <th className="p-2 border">Price</th>
-            <th className="p-2 border">Total</th>
-            <th className="p-2 border">Status</th>
-            <th className="p-2 border">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {items.map((item, i) => (
-            <tr key={i}>
-              <td className="border p-2">{item.foodname}</td>
-              <td className="border p-2">{item.foodquantity}</td>
-              <td className="border p-2">₹{item.foodprice}</td>
-              <td className="border p-2">₹{item.total}</td>
-              <td className="border p-2">
-                <button
-                  onClick={() => handleStatusToggle(i)}
-                  className={`px-2 py-1 rounded ${item.status === 'Delivered' ? 'bg-green-500' : 'bg-yellow-500'} text-white`}
-                >
-                  {item.status}
-                </button>
-              </td>
-              <td className="border p-2 space-x-2">
-                <button onClick={() => handleEdit(i)} className="text-blue-600">Edit</button>
-                <button onClick={() => handleDelete(i)} className="text-red-600">Delete</button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+        {/* Items Table */}
+        <div className="table-modern overflow-x-auto">
+          <table className="w-full text-center">
+            <thead className="table-header">
+              <tr>
+                <th className="p-2">Food</th>
+                <th className="p-2">Qty</th>
+                <th className="p-2">Price</th>
+                <th className="p-2">Total</th>
+                <th className="p-2">Status</th>
+                <th className="p-2">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item, i) => (
+                <tr key={i} className="table-row">
+                  <td className="p-2">{item.foodname}</td>
+                  <td className="p-2">{item.foodquantity}</td>
+                  <td className="p-2">₹{item.foodprice}</td>
+                  <td className="p-2">₹{item.total}</td>
+                  <td className="p-2">
+                    <button onClick={() => handleStatusToggle(i)} className={`px-2 py-1 rounded text-white ${item.status === 'Delivered' ? 'bg-green-500' : 'bg-yellow-500'}`}>
+                      {item.status}
+                    </button>
+                  </td>
+                  <td className="p-2 space-x-2">
+                    <button onClick={() => handleEdit(i)} className="text-blue-600">Edit</button>
+                    <button onClick={() => handleDelete(i)} className="text-red-600">Delete</button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
 
-      {/* Buttons */}
-      <div className="flex items-center gap-4 mt-4">
-        <button
-          onClick={handleSave}
-          className="bg-green-600 text-white px-6 py-2 rounded"
-        >
-          Save Order
-        </button>
+        {/* Buttons */}
+        <div className="flex items-center gap-4 mt-4">
+          <button onClick={handleSave} className="btn-success">Save Order</button>
 
-        <button
-          onClick={handleCompleteOrder}
-          className={`px-6 py-2 rounded text-white ${orderStatus === 'Completed' ? 'bg-gray-500' : 'bg-purple-600'}`}
-        >
-          {orderStatus === 'Completed' ? 'Completed' : 'Complete Order'}
-        </button>
+          <button onClick={handleCompleteOrder} className={`px-6 py-2 rounded text-white ${orderStatus === 'Completed' ? 'bg-gray-500' : 'bg-purple-600'}`}>
+            {orderStatus === 'Completed' ? 'Completed' : 'Complete Order'}
+          </button>
+        </div>
       </div>
     </div>
   );

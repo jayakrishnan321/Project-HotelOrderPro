@@ -76,90 +76,92 @@ function AdminEditFood() {
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-lg mt-6">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Edit Food Item</h2>
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div>
-          <label className="block mb-1">Food Name</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            className="w-full border border-black p-2 rounded"
-            required
-          />
-        </div>
+    <div className="max-w-xl mx-auto mt-6">
+      <div className="glass-card-solid p-6 rounded-xl shadow-lg">
+        <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">Edit Food Item</h2>
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block mb-1">Food Name</label>
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+          </div>
 
-        <div>
-          <label className="block mb-1">Type</label>
-          <select
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
-            className="w-full border border-black p-2 rounded"
+          <div>
+            <label className="block mb-1">Type</label>
+            <select
+              name="type"
+              value={formData.type}
+              onChange={handleChange}
+              className="input-field"
+            >
+              <option value="veg">Veg</option>
+              <option value="non-veg">Non-Veg</option>
+            </select>
+          </div>
+
+          <div>
+            <label className="block mb-1">Price(Non AC) (₹)</label>
+            <input
+              type="number"
+              name="nonacprice"
+              value={formData.nonacprice}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+          </div>
+          <div>
+            <label className="block mb-1">Price(AC) (₹)</label>
+            <input
+              type="number"
+              name="acprice"
+              value={formData.acprice}
+              onChange={handleChange}
+              className="input-field"
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1">Picture</label>
+            {prevImage && (
+              <img src={prevImage} alt="food" className="w-20 h-20 object-cover mb-2 rounded" />
+            )}
+            <input
+              type="file"
+              name="image"
+              accept="image/*"
+              onChange={handleChange}
+              className="input-field"
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1">Description</label>
+            <textarea
+              name="description"
+              value={formData.description}
+              onChange={handleChange}
+              className="input-field resize-none"
+              rows="3"
+              required
+            />
+          </div>
+
+          <button
+            type="submit"
+            className="btn-primary w-full"
           >
-            <option value="veg">Veg</option>
-            <option value="non-veg">Non-Veg</option>
-          </select>
-        </div>
-
-        <div>
-          <label className="block mb-1">Price(Non AC) (₹)</label>
-          <input
-            type="number"
-            name="nonacprice"
-            value={formData.nonacprice}
-            onChange={handleChange}
-            className="w-full border border-black p-2 rounded"
-            required
-          />
-        </div>
-        <div>
-          <label className="block mb-1">Price(AC) (₹)</label>
-          <input
-            type="number"
-            name="acprice"
-            value={formData.acprice}
-            onChange={handleChange}
-            className="w-full border border-black p-2 rounded"
-            required
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Picture</label>
-          {prevImage && (
-            <img src={prevImage} alt="food" className="w-20 h-20 object-cover mb-2" />
-          )}
-          <input
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleChange}
-            className="w-full border border-black p-2 rounded"
-          />
-        </div>
-
-        <div>
-          <label className="block mb-1">Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            className="w-full border border-black p-2 rounded"
-            rows="3"
-            required
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700"
-        >
-          Update Food
-        </button>
-      </form>
+            Update Food
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

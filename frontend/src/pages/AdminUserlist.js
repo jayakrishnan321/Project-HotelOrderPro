@@ -36,22 +36,20 @@ function AdminUserlist() {
   }, [adminemail])
   return (
     <div className="p-4">
-      <h2 className="text-2xl font-bold text-center mb-4">User List</h2>
-      <button
-        onClick={() => navigate('/admin/home')}
-        className="ml-4 bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
-      >
-        Go to Home
-      </button>
-      <div className="mt-3 overflow-x-auto">
-        <table className="min-w-full table-fixed border border-gray-300">
-          <thead className="bg-gray-100">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-2xl font-bold">User List</h2>
+        <button onClick={() => navigate('/admin/home')} className="btn-secondary">Go to Home</button>
+      </div>
+
+      <div className="table-modern overflow-x-auto">
+        <table className="min-w-full">
+          <thead className="table-header">
             <tr>
-              <th className="p-3 border">S.No</th>
-              <th className="p-3 border">Name</th>
-              <th className="p-3 border">User Email</th>
-              <th className="p-3 border">Admin Email</th>
-              <th className="p-3 border">Status</th>
+              <th className="p-3">S.No</th>
+              <th className="p-3">Name</th>
+              <th className="p-3">User Email</th>
+              <th className="p-3">Admin Email</th>
+              <th className="p-3">Status</th>
             </tr>
           </thead>
           <tbody>
@@ -61,12 +59,12 @@ function AdminUserlist() {
               </tr>
             ) : (
               users.map((user, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="p-3 border text-center">{index + 1}</td>
-                  <td className="p-3 border text-center">{user.name}</td>
-                  <td className="p-3 border text-center">{user.useremail}</td>
-                  <td className="p-3 border text-center">{user.adminemail}</td>
-                  <td className="p-3 border text-center capitalize">{user.status}</td>
+                <tr key={index} className="table-row text-center">
+                  <td className="p-3">{index + 1}</td>
+                  <td className="p-3">{user.name}</td>
+                  <td className="p-3">{user.useremail}</td>
+                  <td className="p-3">{user.adminemail}</td>
+                  <td className="p-3 capitalize">{user.status}</td>
                 </tr>
               ))
             )}

@@ -47,71 +47,76 @@ function UserAllOrders() {
   });
   return (
     <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4 text-center">All Orders</h1>
-      <input
-        type="text"
-        placeholder="Search Table Number"
-        value={searchTableNumber}
-        onChange={(e) => setSearchTableNumber(e.target.value)}
-        className="border px-3 py-1 rounded"
-      />
-      <input
-        type="text"
-        placeholder="Search Table Type"
-        value={searchTableType}
-        onChange={(e) => setSearchTableType(e.target.value)}
-        className="border px-3 py-1 rounded"
-      />
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl font-bold">All Orders</h1>
+        <button onClick={() => navigate('/users/dashboard')} className="btn-secondary">Go to Home</button>
+      </div>
 
-      <input
-        type="text"
-        placeholder="Search Status"
-        value={searchStatus}
-        onChange={(e) => setSearchStatus(e.target.value)}
-        className="border px-3 py-1 rounded"
-      />
-      <input
-        type="text"
-        placeholder="Search Payment Status"
-        value={searchPaymentStatus}
-        onChange={(e) => setSearchPaymentStatus(e.target.value)}
-        className="border px-3 py-1 rounded"
-      />
-      <input
-        type="text"
-        placeholder="Search Date (e.g. 08/07/2025)"
-        value={searchDate}
-        onChange={(e) => setSearchDate(e.target.value)}
-        className="border px-3 py-1 rounded"
-      />
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-300 shadow-lg rounded-lg">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="p-3 border">Table Number</th>
-              <th className="p-3 border">Table Type</th>
-              <th className="p-3 border">Total Price</th>
-              <th className="p-3 border">Status</th>
-              <th className="p-3 border">Created At</th>
-              <th className="p-3 border">Items</th>
+      <div className="glass-card p-4 mb-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <input
+            type="text"
+            placeholder="Search Table Number"
+            value={searchTableNumber}
+            onChange={(e) => setSearchTableNumber(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="text"
+            placeholder="Search Table Type"
+            value={searchTableType}
+            onChange={(e) => setSearchTableType(e.target.value)}
+            className="search-input"
+          />
+
+          <input
+            type="text"
+            placeholder="Search Status"
+            value={searchStatus}
+            onChange={(e) => setSearchStatus(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="text"
+            placeholder="Search Payment Status"
+            value={searchPaymentStatus}
+            onChange={(e) => setSearchPaymentStatus(e.target.value)}
+            className="search-input"
+          />
+          <input
+            type="text"
+            placeholder="Search Date (e.g. 08/07/2025)"
+            value={searchDate}
+            onChange={(e) => setSearchDate(e.target.value)}
+            className="search-input"
+          />
+        </div>
+      </div>
+
+      <div className="table-modern overflow-x-auto">
+        <table className="min-w-full">
+          <thead className="table-header">
+            <tr>
+              <th className="p-3">Table Number</th>
+              <th className="p-3">Table Type</th>
+              <th className="p-3">Total Price</th>
+              <th className="p-3">Status</th>
+              <th className="p-3">Created At</th>
+              <th className="p-3">Items</th>
             </tr>
           </thead>
           <tbody>
             {filteredOrders.map((order) => (
-              <tr key={order._id} className="text-center hover:bg-gray-50">
-                <td className="p-2 border">{order.tableNumber}</td>
-                <td className="p-2 border">{order.tableType}</td>
-                <td className="p-2 border">₹{order.totalPrice}</td>
-                <td className="p-2 border">{order.overallStatus}</td>
-                <td className="p-2 border">
-                  {new Date(order.createdAt).toLocaleString()}
-                </td>
-                <td className="p-2 border">
+              <tr key={order._id} className="table-row text-center">
+                <td className="p-2">{order.tableNumber}</td>
+                <td className="p-2">{order.tableType}</td>
+                <td className="p-2">₹{order.totalPrice}</td>
+                <td className="p-2">{order.overallStatus}</td>
+                <td className="p-2">{new Date(order.createdAt).toLocaleString()}</td>
+                <td className="p-2 text-left">
                   <ul className="list-disc list-inside">
                     {order.items.map((item, index) => (
-                      <li key={index}>
-                        {item.foodname} x {item.foodquantity}
-                      </li>
+                      <li key={index}>{item.foodname} x {item.foodquantity}</li>
                     ))}
                   </ul>
                 </td>
@@ -119,21 +124,12 @@ function UserAllOrders() {
             ))}
             {filteredOrders.length === 0 && (
               <tr>
-                <td colSpan="6" className="p-4 text-center text-gray-500">
-                  No orders found.
-                </td>
+                <td colSpan="6" className="p-4 text-center text-gray-500">No orders found.</td>
               </tr>
             )}
           </tbody>
         </table>
       </div>
-      <button
-        onClick={() => navigate('/users/dashboard')}
-        className="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded shadow"
-      >
-        Go to Home
-      </button>
-
     </div>
   );
 }
