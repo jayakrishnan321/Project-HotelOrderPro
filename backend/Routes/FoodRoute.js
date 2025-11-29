@@ -36,11 +36,11 @@ router.post('/upload', upload.single('foodimage'), async (req, res) => {
       foodnonacprice,
       foodacprice,
       fooddescription,
-      foodimage: `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`,
+      foodimage: `/uploads/${req.file.filename}`,
       adminId,
       adminemail
     });
-
+console.log(food)
     await food.save();
     res.status(201).json({ message: 'Food item added successfully' });
   } catch (err) {
@@ -85,7 +85,7 @@ router.put('/edit/:id', upload.single('foodimage'), async (req, res) => {
     };
 
     if (req.file) {
-      updateFields.foodimage = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      updateFields.foodimage = `/uploads/${req.file.filename}`;
     }
 
     await Food.findByIdAndUpdate(req.params.id, updateFields);

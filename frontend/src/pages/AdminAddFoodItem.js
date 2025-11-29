@@ -34,15 +34,20 @@ function AdminAddFoodItem() {
     image: null,
     description: ''
   });
+  const [imageFile, setImageFile] = useState(null);
+    const handleImageChange = (e) => {
+    setImageFile(e.target.files[0]);
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(imageFile)
 
     const data = new FormData();
     data.append('foodname', formData.name);
     data.append('foodtype', formData.type);
     data.append('foodnonacprice', formData.nonacprice);
     data.append('foodacprice', formData.acprice)
-    data.append('foodimage', formData.image);
+    data.append('foodimage', imageFile);
     data.append('fooddescription', formData.description);
     data.append('adminId', id)
     data.append('adminemail', adminemail)
@@ -154,7 +159,7 @@ function AdminAddFoodItem() {
                   type="file"
                   name="image"
                   accept="image/*"
-                  onChange={handleChange}
+                  onChange={handleImageChange}
                   className="hidden"
                   id="image-upload"
                 />
