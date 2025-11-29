@@ -1,5 +1,5 @@
 import React from 'react'
-import axios from 'axios';
+import api from '../api';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,8 +33,8 @@ function AdminChangePassword() {
     }
 
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/admin/change-password/${id}`,
+      const res = await api.put(
+        `/api/admin/change-password/${id}`,
         { oldPassword, newPassword }
       );
       alert(res.data.msg || "Password updated successfully");

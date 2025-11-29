@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 function UserRegister() {
   const navigate = useNavigate()
@@ -27,7 +27,7 @@ function UserRegister() {
     }
 
     try {
-      const res = await axios.post('http://localhost:5000/api/users/send-otp', form);
+      const res = await api.post('/api/users/send-otp', form);
       alert('Registered successfully! Check your email for OTP.');
       setOtpSent(true);
       console.log(res.data);
@@ -42,7 +42,7 @@ function UserRegister() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/api/users/verify-otp', {
+      const res = await api.post('/api/users/verify-otp', {
         name: form.name,
         useremail: form.useremail,
         adminemail: form.adminemail,

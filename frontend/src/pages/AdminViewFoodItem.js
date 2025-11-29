@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 function AdminViewFoodItem() {
   const [foods, setFoods] = useState([]);
@@ -28,7 +28,7 @@ function AdminViewFoodItem() {
   // Fetch all food items
   const fetchFoods = useCallback(async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/foods/fooditems/${id}`);
+      const res = await api.get(`/api/foods/fooditems/${id}`);
       setFoods(res.data);
       console.log(res.data)
     } catch (err) {
@@ -44,7 +44,7 @@ function AdminViewFoodItem() {
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this item?')) {
       try {
-        await axios.delete(`http://localhost:5000/api/foods/${id}`);
+        await api.delete(`/api/foods/${id}`);
         fetchFoods()
       } catch (err) {
         console.error('Delete failed:', err);

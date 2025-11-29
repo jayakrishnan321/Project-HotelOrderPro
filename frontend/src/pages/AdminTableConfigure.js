@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 function TableConfigure() {
   const navigate = useNavigate()
@@ -24,7 +24,7 @@ function TableConfigure() {
   const handleViewConfig = async () => {
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/tables/${adminId}`);
+      const res = await api.get(`/api/tables/${adminId}`);
       const { acTables = 0, nonAcTables = 0 } = res.data;
 
       const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 function AdminTableSettings() {
@@ -27,7 +27,7 @@ function AdminTableSettings() {
   }, [navigate])
   useEffect(() => {
     if (!token) return;
-    axios.get(`http://localhost:5000/api/tables/${adminId}`).then(res => {
+    api.get(`/api/tables/${adminId}`).then(res => {
       if (res.data) setForm(res.data);
     });
   }, [adminId, token]);
@@ -39,7 +39,7 @@ function AdminTableSettings() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:5000/api/tables`, {
+      await api.post(`/api/tables`, {
         ...form,
         adminId,
         adminemail

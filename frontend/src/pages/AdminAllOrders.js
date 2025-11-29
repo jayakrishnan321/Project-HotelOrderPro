@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import axios from 'axios';
+import api from '../api';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -36,7 +36,7 @@ function AdminAllOrders() {
   useEffect(() => {
     if (!adminemail) return;
     const fetchallorders = async () => {
-      const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
+      const res = await api.get(`/api/orders/allorders/${adminemail}`);
       setOrders(res.data)
     }
     fetchallorders()

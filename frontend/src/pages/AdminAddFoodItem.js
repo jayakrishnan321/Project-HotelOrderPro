@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import axios from 'axios'
+import api from '../api'
 import { useNavigate } from 'react-router-dom';
 function AdminAddFoodItem() {
   const navigate = useNavigate()
@@ -48,7 +48,7 @@ function AdminAddFoodItem() {
     data.append('adminemail', adminemail)
 
     try {
-      const res = await axios.post('http://localhost:5000/api/foods/upload', data);
+      const res = await api.post('/api/foods/upload', data);
       alert('Food item added!');
       console.log(res.data)
       navigate('/admin/home')

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 function AdminTableStatus() {
   const navigate = useNavigate()
@@ -31,7 +31,7 @@ function AdminTableStatus() {
 
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/orders/table-status/${adminemail}/${type}/${number}`);
+        const res = await api.get(`/api/orders/table-status/${adminemail}/${type}/${number}`);
         setOrder(res.data);
         setSelectedStatus(res.data?.paymentStatus || 'Pending');
       } catch (error) {
@@ -48,7 +48,7 @@ function AdminTableStatus() {
 
   const saveStatus = async () => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/update-payment-status/${order._id}`, {
+      await api.put(`/api/orders/update-payment-status/${order._id}`, {
         paymentStatus: selectedStatus
       });
       alert('Payment status updated successfully');

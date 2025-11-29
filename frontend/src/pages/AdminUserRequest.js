@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 function AdminUserRequest() {
   const navigate = useNavigate()
@@ -23,15 +23,15 @@ function AdminUserRequest() {
   }, [navigate])
   useEffect(() => {
     if (!adminEmail) return;
-    axios
-      .get(`http://localhost:5000/api/users/pending/${adminEmail}`)
+    api
+      .get(`/api/users/pending/${adminEmail}`)
       .then((res) => setUsers(res.data))
       .catch((err) => console.error('Error fetching users', err));
   }, [adminEmail]);
 
   const handleStatusChange = async (userId, newStatus) => {
     try {
-      await axios.patch(`http://localhost:5000/api/users/status/${userId}`, {
+      await api.patch(`/api/users/status/${userId}`, {
         status: newStatus,
       });
       setUsers((prev) =>

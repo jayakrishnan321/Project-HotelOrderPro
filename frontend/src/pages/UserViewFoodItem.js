@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect, useCallback } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 function UserViewFoodItem() {
@@ -30,7 +30,7 @@ function UserViewFoodItem() {
   // Fetch all food items
   const fetchFoods = useCallback(async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/foods/users/fooditems/${adminemail}`);
+      const res = await api.get(`/api/foods/users/fooditems/${adminemail}`);
       setFoods(res.data);
       console.log(res.data)
     } catch (err) {

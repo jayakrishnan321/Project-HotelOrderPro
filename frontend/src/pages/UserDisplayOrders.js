@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 
 function UserDisplayOrders() {
   const { type, number } = useParams();
@@ -32,14 +32,14 @@ function UserDisplayOrders() {
   useEffect(() => {
     if (!adminemail) return;
     const fetchFoods = async () => {
-      const res = await axios.get(`http://localhost:5000/api/foods/users/fooditems/${adminemail}`);
+      const res = await api.get(`/api/foods/users/fooditems/${adminemail}`);
       setFoods(res.data);
     };
 
     const fetchUncompletedOrder = async () => {
 
       try {
-        const res = await axios.get(`http://localhost:5000/api/orders/uncompleted/${number}/${type}/${adminemail}`);
+        const res = await api.get(`/api/orders/uncompleted/${number}/${type}/${adminemail}`);
         const existingOrder = res.data;
         console.log(existingOrder)
         if (existingOrder) {
@@ -89,10 +89,10 @@ function UserDisplayOrders() {
     };
     try {
       if (orderId) {
-        await axios.put(`http://localhost:5000/api/orders/update/${orderId}`, payload);
+        await api.put(`/api/orders/update/${orderId}`, payload);
         alert("Order updated successfully");
       } else {
-        const res = await axios.post("http://localhost:5000/api/orders/add", {
+        const res = await api.post("/api/orders/add", {
           tableNumber: number,
           tableType: type,
           adminemail,
@@ -134,7 +134,7 @@ function UserDisplayOrders() {
         orderStatus: 'Completed'
       };
 
-      await axios.put('http://localhost:5000/api/orders/complete', payload);
+      await api.put('/api/orders/complete', payload);
       setOrderStatus('Completed');
       alert('Order marked as completed');
       navigate('/users/dashboard')

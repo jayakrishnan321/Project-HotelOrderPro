@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 function UserTakeOrders() {
   const navigate = useNavigate()
@@ -28,7 +28,7 @@ function UserTakeOrders() {
 
 
     try {
-      const res = await axios.get(`http://localhost:5000/api/tables/users/${adminemail}`);
+      const res = await api.get(`/api/tables/users/${adminemail}`);
       const { acTables = 0, nonAcTables = 0 } = res.data;
 
       const ac = Array.from({ length: acTables }, (_, i) => ({ type: 'AC', number: i + 1 }));

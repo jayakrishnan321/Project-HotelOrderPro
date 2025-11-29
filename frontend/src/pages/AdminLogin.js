@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 function AdminLogin() {
@@ -15,7 +15,7 @@ function AdminLogin() {
       return;
     }
     try {
-      const res = await axios.post('http://localhost:5000/api/admin/login', form);
+      const res = await api.post('/api/admin/login', form);
       alert(res.data.message);
       sessionStorage.setItem('token', res.data.token);
 

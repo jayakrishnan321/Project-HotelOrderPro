@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 
 function UserChangePassword() {
   const [oldPassword, setOldPassword] = useState("");
@@ -47,8 +47,8 @@ function UserChangePassword() {
 
     setLoading(true)
     try {
-      const res = await axios.put(
-        `http://localhost:5000/api/users/change-password/${id}`,
+      const res = await api.put(
+        `/api/users/change-password/${id}`,
         { oldPassword, newPassword }
       );
       setMessage(res.data.msg || "Password updated successfully")

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../api';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 function UserAllOrders() {
@@ -23,7 +23,7 @@ function UserAllOrders() {
         const decoded = JSON.parse(atob(token.split(".")[1]));
         const adminemail = decoded.adminemail;
 
-        const res = await axios.get(`http://localhost:5000/api/orders/allorders/${adminemail}`);
+        const res = await api.get(`/api/orders/allorders/${adminemail}`);
         setOrders(res.data);
       } catch (error) {
         navigate("/users/login");

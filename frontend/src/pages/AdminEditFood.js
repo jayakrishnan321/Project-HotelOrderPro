@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import api from '../api';
 
 function AdminEditFood() {
   const { id } = useParams();
@@ -27,7 +27,7 @@ function AdminEditFood() {
     if (!token) return;
     const fetchFood = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/foods/${id}`);
+        const res = await api.get(`/api/foods/${id}`);
         const data = res.data;
         setFormData({
           name: data.foodname,
@@ -66,7 +66,7 @@ function AdminEditFood() {
     }
 
     try {
-      await axios.put(`http://localhost:5000/api/foods/edit/${id}`, data);
+      await api.put(`/api/foods/edit/${id}`, data);
       alert('Food updated successfully');
       navigate('/admin/viewfooditem/:id');
     } catch (err) {

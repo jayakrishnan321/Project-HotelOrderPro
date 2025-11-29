@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../api';
 import { useNavigate } from 'react-router-dom';
 
 function UserLogin() {
@@ -13,7 +13,7 @@ function UserLogin() {
     e.preventDefault();
 
     try {
-      const res = await axios.post('http://localhost:5000/api/users/login', form);
+      const res = await api.post('/api/users/login', form);
       sessionStorage.setItem('token', res.data.token);
       alert('Login successful!');
       navigate('/users/dashboard');

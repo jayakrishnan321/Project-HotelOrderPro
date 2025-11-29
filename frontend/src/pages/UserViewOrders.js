@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../api';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +26,7 @@ function UserViewOrders() {
       try {
 
 
-        const res = await axios.get(`http://localhost:5000/api/orders/vieworders/${adminemail}`);
+        const res = await api.get(`/api/orders/vieworders/${adminemail}`);
 
         // Filter only items with status = "Pending"
         const filteredOrders = res.data.map(order => ({
@@ -44,7 +44,7 @@ function UserViewOrders() {
   }, [adminemail]);
   const handlePendingClick = async (orderId, itemId) => {
     try {
-      await axios.put(`http://localhost:5000/api/orders/update-status/${orderId}/${itemId}`);
+      await api.put(`/api/orders/update-status/${orderId}/${itemId}`);
 
       // After successful update, refresh the list
       setOrders((prevOrders) =>

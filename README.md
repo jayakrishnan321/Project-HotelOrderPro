@@ -57,3 +57,13 @@ MAIL_PASS=app-specific-password
    ```
 3. Visit `http://localhost:3000`, register an admin with the secret key, approve staff, configure tables, add menu items, and manage orders end-to-end.
 
+<<<<<<< HEAD
+=======
+## Screenshots
+- `screenshots/dashboard.png` – Admin overview
+- `screenshots/menu-management.png` – Food catalogue
+- `screenshots/orders-board.png` – Live orders
+
+*(Add actual images in `screenshots/` and update names as needed.)*
+
+>>>>>>> b80c7a7 (made api.js)

@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../api'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
@@ -25,7 +25,7 @@ function AdminUserlist() {
     if (!adminemail) return;
     const fetchusers = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/admin/userlist/${adminemail}`);
+        const res = await api.get(`/api/admin/userlist/${adminemail}`);
         setusers(res.data);
       } catch (err) {
         console.error("Failed to fetch users", err);
