@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../api';
+import { getFoodImageUrl } from '../utils/imageUrl';
 
 function AdminEditFood() {
   const { id } = useParams();
@@ -131,7 +132,7 @@ function AdminEditFood() {
           <div>
             <label className="block mb-1">Picture</label>
             {prevImage && (
-              <img src={prevImage} alt="food" className="w-20 h-20 object-cover mb-2 rounded" />
+              <img src={getFoodImageUrl(prevImage)} alt="food" className="w-20 h-20 object-cover mb-2 rounded" />
             )}
             <input
               type="file"

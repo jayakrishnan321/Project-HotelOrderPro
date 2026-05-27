@@ -3,8 +3,6 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
-require('dotenv').config();
-
 const User = require('../models/User')
 
 const otpStore = {};
@@ -125,6 +123,7 @@ router.patch('/status/:id', async (req, res) => {
 });
 router.post('/login', async (req, res) => {
   const { useremail, password } = req.body;
+  console.log(req.body)
 
   try {
     const user = await User.findOne({ useremail });

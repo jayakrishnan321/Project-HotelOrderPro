@@ -2,6 +2,7 @@ import React from 'react'
 import { useState, useEffect, useCallback } from 'react';
 import api from '../api';
 import { useNavigate } from 'react-router-dom';
+import { getFoodImageUrl } from '../utils/imageUrl';
 function AdminViewFoodItem() {
   const [foods, setFoods] = useState([]);
   const [searchName, setSearchName] = useState('');
@@ -161,7 +162,7 @@ function AdminViewFoodItem() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-center">
                       <img 
-                        src= {`${process.env.REACT_APP_API_URL}${food.foodimage}`} 
+                        src={getFoodImageUrl(food.foodimage)}
                         alt={food.foodname} 
                         className="w-16 h-16 object-cover rounded-lg mx-auto shadow-md" 
                       />
