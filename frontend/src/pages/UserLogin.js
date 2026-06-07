@@ -45,7 +45,7 @@ function UserLogin() {
               name="useremail"
               value={form.useremail}
               onChange={handleChange}
-              placeholder="Enter your email"
+              placeholder="Enter user email"
               className="input-field"
               required
             />
