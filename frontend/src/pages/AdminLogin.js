@@ -49,7 +49,7 @@ function AdminLogin() {
             <input
               type="email"
               name="email"
-              placeholder="Enter your email"
+              placeholder="Enter your emails"
               className="input-field"
               onChange={handleChange}
             />
