@@ -35,6 +35,9 @@ function UserLogin() {
             Staff Login
           </h2>
           <p className="text-gray-600">Sign in to access your workspace</p>
+          <p className="text-sm text-gray-500 mt-3">
+            Guest demo: <span className="font-medium text-gray-700">sample@gmail.com</span> / <span className="font-medium text-gray-700">1234</span>
+          </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">

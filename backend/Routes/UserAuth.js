@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const User = require('../models/User')
+const Admin = require('../models/Admin')
+const { isGuestLogin, GUEST_EMAIL, GUEST_PASSWORD } = require('../utils/guestLogin')
 
 const otpStore = {};
 
@@ -126,19 +128,35 @@ router.post('/login', async (req, res) => {
   console.log(req.body)
 
   try {
-    const user = await User.findOne({ useremail });
-    if (!user) return res.status(400).json({ message: 'User not found' });
+    let user;
 
-    // Check if user is approved
-    if (user.status !== 'approved') {
-      return res.status(403).json({ message: `Access denied. Status: ${user.status}` });
+    if (isGuestLogin(useremail, password)) {
+      user = await User.findOne({ useremail: GUEST_EMAIL });
+      if (!user) {
+        user = await User.findOne({ status: 'approved' }).sort({ _id: 1 });
+      }
+      if (!user) {
+        const admin = await Admin.findOne().sort({ _id: 1 });
+        user = await User.create({
+          name: 'Guest Staff',
+          useremail: GUEST_EMAIL,
+          adminemail: admin?.adminemail || GUEST_EMAIL,
+          password: await bcrypt.hash(GUEST_PASSWORD, 10),
+          status: 'approved',
+        });
+      }
+    } else {
+      user = await User.findOne({ useremail });
+      if (!user) return res.status(400).json({ message: 'User not found' });
+
+      if (user.status !== 'approved') {
+        return res.status(403).json({ message: `Access denied. Status: ${user.status}` });
+      }
+
+      const isMatch = await bcrypt.compare(password, user.password);
+      if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    // Check password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: 'Invalid credentials' });
-
-    // Generate token
     const token = jwt.sign(
       { id: user._id, email: user.useremail, name: user.name, role: 'user', adminemail: user.adminemail },
       process.env.JWT_SECRET,

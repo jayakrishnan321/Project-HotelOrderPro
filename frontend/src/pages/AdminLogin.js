@@ -41,6 +41,9 @@ function AdminLogin() {
             Admin Login
           </h2>
           <p className="text-gray-600">Sign in to manage your restaurant</p>
+          <p className="text-sm text-gray-500 mt-3">
+            Guest demo: <span className="font-medium text-gray-700">sample@gmail.com</span> / <span className="font-medium text-gray-700">1234</span>
+          </p>
         </div>
 
         <div className="space-y-6">

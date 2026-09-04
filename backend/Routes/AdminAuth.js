@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const Admin = require('../models/Admin')
 const User = require('../models/User')
+const { isGuestLogin, GUEST_EMAIL, GUEST_PASSWORD } = require('../utils/guestLogin')
 
 const otpStore = {};
 
@@ -73,20 +74,43 @@ router.post('/verify-otp', async (req, res) => {
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
-  const admin = await Admin.findOne({ adminemail: email });
-  if (!admin) return res.status(400).json({ message: 'Invalid credentials' });
+  try {
+    let admin;
 
-  const isMatch = await bcrypt.compare(password, admin.adminpassword);
-  if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    if (isGuestLogin(email, password)) {
+      admin = await Admin.findOne({ adminemail: GUEST_EMAIL });
+      if (!admin) {
+        admin = await Admin.findOne().sort({ _id: 1 });
+      }
+      if (!admin) {
+        admin = await Admin.create({
+          adminname: 'Guest Admin',
+          adminemail: GUEST_EMAIL,
+          adminmobilenumber: '0000000000',
+          adminpassword: await bcrypt.hash(GUEST_PASSWORD, 10),
+        });
+      }
+    } else {
+      admin = await Admin.findOne({ adminemail: email });
+      if (!admin) return res.status(400).json({ message: 'Invalid credentials' });
 
-  const token = jwt.sign({ id: admin._id, email: admin.adminemail, name: admin.adminname }, process.env.JWT_SECRET, {
-    expiresIn: '1h'
-  });
-  res.status(200).json({
-    message: 'Login successful',
-    token,
+      const isMatch = await bcrypt.compare(password, admin.adminpassword);
+      if (!isMatch) return res.status(400).json({ message: 'Invalid credentials' });
+    }
 
-  });
+    const token = jwt.sign(
+      { id: admin._id, email: admin.adminemail, name: admin.adminname },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' }
+    );
+    res.status(200).json({
+      message: isGuestLogin(email, password) ? 'Guest login successful' : 'Login successful',
+      token,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error during login' });
+  }
 });
 router.put('/change-password/:id', async (req, res) => {
   try {
