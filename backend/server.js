@@ -29,9 +29,23 @@ mongoose.connect(process.env.MONGO_URI,{
   useUnifiedTopology: true
 }).then(()=>{
     console.log('mongodb connected succesful')
+    
+console.log("================================");
+console.log("CLOUDINARY CONFIG CHECK");
+console.log("Cloud name:", process.env.CLOUDINARY_CLOUD_NAME);
+console.log(
+  "API key exists:",
+  Boolean(process.env.CLOUDINARY_API_KEY)
+);
+console.log(
+  "API secret exists:",
+  Boolean(process.env.CLOUDINARY_API_SECRET)
+);
+console.log("================================");
 }).catch((err)=>{
     console.log(err)
 })
+
 
 // ── Health check ────────────────────────────────────────────────────────────
 app.get('/api/health', async (req, res) => {

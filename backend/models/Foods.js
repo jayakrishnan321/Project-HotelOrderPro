@@ -1,23 +1,54 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const  FoodSchema= new mongoose.Schema({
-  foodname: { type: String, required: true },
-  foodtype: { type: String, required: true},
-  foodnonacprice: { type: String, required: true }, 
-  foodacprice: { type: String, required: true }, 
-  foodimage: { type: String, required: true },
-  fooddescription:{type:String,required:true},
+const FoodSchema = new mongoose.Schema({
+  foodname: {
+    type: String,
+    required: true,
+  },
+
+  foodtype: {
+    type: String,
+    required: true,
+  },
+
+  foodnonacprice: {
+    type: String,
+    required: true,
+  },
+
+  foodacprice: {
+    type: String,
+    required: true,
+  },
+
+  // Cloudinary image URL
+  foodimage: {
+    type: String,
+    required: true,
+  },
+
+  // Cloudinary public ID
+  // Used to delete or replace image
+  imagePublicId: {
+    type: String,
+  },
+
+  fooddescription: {
+    type: String,
+    required: true,
+  },
+
   adminemail: {
-  type: String,
-  required: true,
-  lowercase: true 
-},
+    type: String,
+    required: true,
+    lowercase: true,
+  },
+
   adminId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Admin',  
-    required: true
-  }
-
+    ref: "Admin",
+    required: true,
+  },
 });
 
-module.exports = mongoose.model('Foods',FoodSchema);
+module.exports = mongoose.model("Foods", FoodSchema);
